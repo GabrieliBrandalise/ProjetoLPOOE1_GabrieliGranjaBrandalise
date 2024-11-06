@@ -5,16 +5,19 @@
 package pf.cc0033.salaodebeleza.entidade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -22,31 +25,38 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="tb_agenda")
-public class Agenda implements Serializable {
+public class Agenda implements Serializable{
     
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private static final long serialVersionUID = 1L;
+    
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
     
-    @OneToOne
-    @JoinColumn(name = "agendamento_id")
-    private Agendamento agendamento;
+    @OneToMany(mappedBy = "agenda")
+    private List<Agendamento> agendamentos;    
     
-    @ManyToOne
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionario;
-     
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name="horariomarcado")
     private Date horarioMarcado;
+    
+    @OneToOne
+    @JoinColumn(name = "funcionario_id", unique = true)
+    private Funcionario funcionario;
+    
+    
+    
+    public Agenda(){
+        this.agendamentos = new ArrayList<>();
+    }
 
     
-    public Agendamento getAgendamento() {
-        return agendamento;
+    
+    
+    public Integer getId() {
+        return id;
     }
 
-    public void setAgendamento(Agendamento agendamento) {
-        this.agendamento = agendamento;
-    }
 
     public Date getHorarioMarcado() {
         return horarioMarcado;
@@ -55,12 +65,24 @@ public class Agenda implements Serializable {
     public void setHorarioMarcado(Date horarioMarcado) {
         this.horarioMarcado = horarioMarcado;
     }
-    
-    public Integer getId() {
-        return id;
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAgendamentos(List<Agendamento> agendamentos) {
+        this.agendamentos = agendamentos;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+    
+    public void addAgendamentos(Agendamento agendamento){
+        this.agendamentos.add(agendamento);
     }
 }

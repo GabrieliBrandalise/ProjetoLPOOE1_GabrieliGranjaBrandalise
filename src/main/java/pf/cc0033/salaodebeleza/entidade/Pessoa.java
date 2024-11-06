@@ -19,26 +19,28 @@ import javax.persistence.Table;
  * @author ggbra
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="tb_pessoa")
-public class Pessoa implements Serializable {
+@Table(name = "tb_pessoa")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class Pessoa implements Serializable{
     
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private static final long serialVersionUID = 1L;
+    
     @Id
-    private Integer Id;
-
-    public Integer getId() {
-        return Id;
-    }
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    private Integer id;
     
-    @Column(name="nome", length = 100)
+    @Column(name="nome", length = 150)
     private String nome;
     
-    @Column(name="telefone", length = 12)
+    @Column(name="telefone", length = 9)
     private String telefone;
     
     @Column(name="cpf", length = 11)
     private String cpf;
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;

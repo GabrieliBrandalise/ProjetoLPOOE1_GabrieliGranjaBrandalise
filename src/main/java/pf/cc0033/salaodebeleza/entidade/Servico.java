@@ -5,11 +5,13 @@
 package pf.cc0033.salaodebeleza.entidade;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,10 +22,12 @@ import javax.persistence.Table;
 @Table(name="tb_servico")
 public class Servico implements Serializable{
     
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private static final long serialVersionUID = 1L;
+    
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
-
+    
     @Column(name="descricao", length = 150)
     private String descricao;
     
@@ -32,6 +36,17 @@ public class Servico implements Serializable{
     
     @Column(name="maximodesconto")
     private Double maximoDesconto;
+    
+    @ManyToMany(mappedBy = "servicos")
+    private List<Agendamento> agendamentos;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getDescricao() {
         return descricao;
@@ -56,8 +71,12 @@ public class Servico implements Serializable{
     public void setMaximoDesconto(Double maximoDesconto) {
         this.maximoDesconto = maximoDesconto;
     }
-    
-    public Integer getId() {
-        return id;
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
+    }
+
+    public void setAgendamentos(List<Agendamento> agendamentos) {
+        this.agendamentos = agendamentos;
     }
 }
