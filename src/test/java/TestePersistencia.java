@@ -96,6 +96,7 @@ public class TestePersistencia {
              jpa.persist(s);
              jpa.persist(agenda);
              jpa.persist(agendamento);
+             jpa.remover(agendamento);
          } catch (Exception ex) {
              
              System.err.println("Erro ao persistir dadossssssss.");
