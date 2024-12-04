@@ -67,7 +67,7 @@ public class TestePersistencia {
          
          Agenda agenda = new Agenda();
          agenda.setFuncionario(f);
-         agenda.setHorarioMarcado(new Date());
+         
          
          
          
@@ -95,7 +95,7 @@ public class TestePersistencia {
              jpa.persist(s);
              jpa.persist(agenda);
              jpa.persist(agendamento);
-           //  jpa.remover(agendamento);
+          
          } catch (Exception ex) {
              
              System.err.println("Erro ao persistir dados.");

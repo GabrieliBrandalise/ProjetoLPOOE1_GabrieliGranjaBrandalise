@@ -4,9 +4,16 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
-
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
 import pf.cc0033.salaodebeleza.entidade.Funcionario;
-
 
 /**
  *
@@ -14,11 +21,17 @@ import pf.cc0033.salaodebeleza.entidade.Funcionario;
  */
 public class TelaAgenda extends javax.swing.JFrame {
 
+    List<Funcionario> funcionarios;
+    PessoaRepositorioJPA jpa;
+
     /**
      * Creates new form TelaPessoa
      */
     public TelaAgenda() {
         initComponents();
+        jpa = new PessoaRepositorioJPA();
+        funcionarios = new ArrayList<>();
+        this.popularFuncionariosCadastrados();
     }
 
     /**
@@ -33,7 +46,7 @@ public class TelaAgenda extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome2 = new javax.swing.JLabel();
-        jcbFuncionario = new javax.swing.JComboBox<>();
+        cmbFuncionario = new javax.swing.JComboBox<>();
         areaListagem = new javax.swing.JPanel();
         areaBotoes = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
@@ -55,7 +68,7 @@ public class TelaAgenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblBuscaNome2)
                 .addGap(18, 18, 18)
-                .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 14, Short.MAX_VALUE))
         );
         pnlFuncionarioLayout.setVerticalGroup(
@@ -64,7 +77,7 @@ public class TelaAgenda extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscaNome2)
-                    .addComponent(jcbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -124,23 +137,24 @@ public class TelaAgenda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 212, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(pnlFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 2, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(areaListagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(areaBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(areaBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -167,7 +181,8 @@ public class TelaAgenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        TelaAgendaFuncionario telaAgendaFuncionario = new TelaAgendaFuncionario(this, rootPaneCheckingEnabled);
+        Funcionario f = (Funcionario) cmbFuncionario.getModel().getSelectedItem();
+        TelaAgendaFuncionario telaAgendaFuncionario = new TelaAgendaFuncionario(this, rootPaneCheckingEnabled, f);
         telaAgendaFuncionario.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -225,14 +240,52 @@ public class TelaAgenda extends javax.swing.JFrame {
         });
     }
 
+   private void popularFuncionariosCadastrados() {
+    try {
+        funcionarios = jpa.getAllFuncionarios();
+            if (funcionarios == null || funcionarios.isEmpty()) {
+                System.err.println("Nenhum funcionario encontrado para popular o JComboBox.");
+                return;
+            }
+
+            DefaultComboBoxModel<Funcionario> model = new DefaultComboBoxModel<>();
+            model.addElement(null);
+
+            for (Funcionario funcionario : funcionarios) {
+                model.addElement(funcionario);
+            }
+
+            cmbFuncionario.setModel(model);
+            cmbFuncionario.setSelectedItem(null);
+            
+            cmbFuncionario.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Funcionario) {
+                    Funcionario funcionario = (Funcionario) value;
+                    setText(funcionario.getNome()); 
+                } else if (value == null) {
+                    setText("Selecione um funcionario"); 
+                }
+                
+                return this;
+            }
+        });
+        } catch (Exception e) {
+            Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
+        }
+    } 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<Funcionario> cmbFuncionario;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox<Funcionario> jcbFuncionario;
     private javax.swing.JLabel lblBuscaNome2;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JPanel pnlFuncionario;

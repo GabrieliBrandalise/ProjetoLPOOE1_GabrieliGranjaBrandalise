@@ -6,9 +6,8 @@ package pf.cc0033.salaodebeleza.entidade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -33,12 +31,8 @@ public class Agenda implements Serializable{
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
     
-    @OneToMany(mappedBy = "agenda")
+    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Agendamento> agendamentos;    
-    
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    @Column(name="horariomarcado")
-    private Date horarioMarcado;
     
     @OneToOne
     @JoinColumn(name = "funcionario_id", unique = true)
@@ -55,15 +49,6 @@ public class Agenda implements Serializable{
     
     public Integer getId() {
         return id;
-    }
-
-
-    public Date getHorarioMarcado() {
-        return horarioMarcado;
-    }
-
-    public void setHorarioMarcado(Date horarioMarcado) {
-        this.horarioMarcado = horarioMarcado;
     }
 
     public List<Agendamento> getAgendamentos() {
@@ -85,4 +70,11 @@ public class Agenda implements Serializable{
     public void addAgendamentos(Agendamento agendamento){
         this.agendamentos.add(agendamento);
     }
+
+    @Override
+    public String toString() {
+        return "Agenda " + funcionario.getNome();
+    }
+    
+    
 }

@@ -97,5 +97,16 @@ public class AgendaRepositorioJPA implements InterfaceBD {
         }
         
     }
+    
+    public List<Agenda> getAllAgenda() {
+        entity = getEntityManager();
+        try {
+            Query query = entity.createQuery("Select a from Agenda a ORDER BY a.id ASC", Agenda.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Agenda: " + e);
+            return null;
+        }
+    }
    
 }

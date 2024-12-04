@@ -5,13 +5,10 @@
 package pf.cc0033.salaodebeleza.entidade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,5 +47,10 @@ public class Funcionario extends Pessoa implements Serializable{
 
     public void setAgenda(Agenda agenda) {
         this.agenda = agenda;
+    }
+    
+    @Override
+    public String toString() {
+        return  "id: " + super.getId() + ", nome: " + super.getNome() + ", cargo: " + tipoFuncionario;
     }
 }

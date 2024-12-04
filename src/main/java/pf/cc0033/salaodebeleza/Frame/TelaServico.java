@@ -4,8 +4,17 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
-import pf.cc0033.salaodebeleza.entidade.Funcionario;
-import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
+import pf.cc0033.salaodebeleza.entidade.Servico;
+
 
 /**
  *
@@ -13,11 +22,16 @@ import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
  */
 public class TelaServico extends javax.swing.JFrame {
 
+    List<Servico> servicos;
+    ServicoRepositorioJPA jpa;
     /**
      * Creates new form TelaPessoa
      */
     public TelaServico() {
         initComponents();
+        servicos = new ArrayList<>();
+        jpa = new ServicoRepositorioJPA();
+        this.carregarFuncionariosCadastrados();
     }
 
     /**
@@ -35,7 +49,7 @@ public class TelaServico extends javax.swing.JFrame {
         lblTitulo1 = new javax.swing.JLabel();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstFuncionarios = new javax.swing.JList<>();
+        lstServico = new javax.swing.JList<>();
         areaBotoes = new javax.swing.JPanel();
         btnNovaPessoa = new javax.swing.JButton();
         btnEditarPessoa = new javax.swing.JButton();
@@ -89,7 +103,8 @@ public class TelaServico extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jScrollPane1.setViewportView(lstFuncionarios);
+        lstServico.setToolTipText("");
+        jScrollPane1.setViewportView(lstServico);
 
         javax.swing.GroupLayout areaListagemLayout = new javax.swing.GroupLayout(areaListagem);
         areaListagem.setLayout(areaListagemLayout);
@@ -205,15 +220,48 @@ public class TelaServico extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscaNomeKeyTyped
 
     private void btnNovaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPessoaActionPerformed
+       TelaCadastroServico telaCadastroServico = new TelaCadastroServico(this, rootPaneCheckingEnabled);
+       telaCadastroServico.setVisible(true);
        
+       this.carregarFuncionariosCadastrados();
     }//GEN-LAST:event_btnNovaPessoaActionPerformed
 
     private void btnEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPessoaActionPerformed
+        Servico servicoSelecionado = lstServico.getSelectedValue();
        
+       if (servicoSelecionado != null){
+           TelaCadastroServico telaEdicaoServico = new TelaCadastroServico(this, rootPaneCheckingEnabled);
+           
+           telaEdicaoServico.setS(servicoSelecionado);
+           telaEdicaoServico.setVisible(true);
+           
+       } else {          
+            JOptionPane.showMessageDialog(this, "Selecione um serviço para editar");
+        }
     }//GEN-LAST:event_btnEditarPessoaActionPerformed
 
     private void btnRemoverPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPessoaActionPerformed
-     
+      Servico servicoSelecionado = lstServico.getSelectedValue();
+        
+        if (servicoSelecionado != null){
+            System.out.println("Serviço: " + servicoSelecionado.getId());   
+            
+            try {
+                jpa.conexaoAberta();
+                
+                int delOp = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir o cadastro " + servicoSelecionado.getDescricao()+ " ?");
+                if (delOp == JOptionPane.YES_OPTION){
+                    jpa.remover(servicoSelecionado);
+                }
+                
+                jpa.fecharConexao();
+                this.carregarFuncionariosCadastrados();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao remover serviço " + servicoSelecionado + "\n" + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um serviço para remover");
+        }
     }//GEN-LAST:event_btnRemoverPessoaActionPerformed
 
     /**
@@ -254,6 +302,14 @@ public class TelaServico extends javax.swing.JFrame {
         });
     }
 
+   private void carregarFuncionariosCadastrados(){
+        jpa.conexaoAberta();
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        modeloLista.addAll(jpa.getAllServicos());
+        lstServico.setModel(modeloLista);
+        jpa.fecharConexao();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;
@@ -265,7 +321,7 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JLabel lblBuscaNome;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo1;
-    private javax.swing.JList<Funcionario> lstFuncionarios;
+    private javax.swing.JList<Servico> lstServico;
     private javax.swing.JPanel pnlFuncionario;
     private javax.swing.JTextField txtBuscaNome;
     // End of variables declaration//GEN-END:variables

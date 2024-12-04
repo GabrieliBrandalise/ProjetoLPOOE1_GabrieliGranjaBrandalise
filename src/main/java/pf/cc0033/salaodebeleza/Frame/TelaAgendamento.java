@@ -4,14 +4,18 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JFormattedTextField;
 import pf.cc0033.salaodebeleza.dao.AgendaRepositorioJPA;
 import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
 import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
+import pf.cc0033.salaodebeleza.entidade.Agendamento;
 import pf.cc0033.salaodebeleza.entidade.Cliente;
 import pf.cc0033.salaodebeleza.entidade.Funcionario;
 import pf.cc0033.salaodebeleza.entidade.Servico;
@@ -28,7 +32,8 @@ public class TelaAgendamento extends javax.swing.JFrame {
     AgendaRepositorioJPA jpa;
     PessoaRepositorioJPA pessoaRepository;
     ServicoRepositorioJPA servicoRepository;
-            
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");   
+   
     /**
      * Creates new form TelaPessoa
      */
@@ -63,11 +68,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
         jftData = new javax.swing.JFormattedTextField();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstFuncionarios = new javax.swing.JList<>();
+        lstAgendamentos = new javax.swing.JList<>();
         areaBotoes = new javax.swing.JPanel();
-        btnNovaPessoa = new javax.swing.JButton();
-        btnEditarPessoa = new javax.swing.JButton();
-        btnRemoverPessoa = new javax.swing.JButton();
+        btnNovoAgendamento = new javax.swing.JButton();
+        btnEditarAgendamento = new javax.swing.JButton();
+        btnRemoverAgendamento = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -124,7 +129,7 @@ public class TelaAgendamento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jScrollPane1.setViewportView(lstFuncionarios);
+        jScrollPane1.setViewportView(lstAgendamentos);
 
         javax.swing.GroupLayout areaListagemLayout = new javax.swing.GroupLayout(areaListagem);
         areaListagem.setLayout(areaListagemLayout);
@@ -143,24 +148,24 @@ public class TelaAgendamento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnNovaPessoa.setText("Novo");
-        btnNovaPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoAgendamento.setText("Novo");
+        btnNovoAgendamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovaPessoaActionPerformed(evt);
+                btnNovoAgendamentoActionPerformed(evt);
             }
         });
 
-        btnEditarPessoa.setText("Editar");
-        btnEditarPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarAgendamento.setText("Editar");
+        btnEditarAgendamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPessoaActionPerformed(evt);
+                btnEditarAgendamentoActionPerformed(evt);
             }
         });
 
-        btnRemoverPessoa.setText("Remover");
-        btnRemoverPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnRemoverAgendamento.setText("Remover");
+        btnRemoverAgendamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoverPessoaActionPerformed(evt);
+                btnRemoverAgendamentoActionPerformed(evt);
             }
         });
 
@@ -170,11 +175,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
             areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(areaBotoesLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(btnNovaPessoa)
+                .addComponent(btnNovoAgendamento)
                 .addGap(79, 79, 79)
-                .addComponent(btnEditarPessoa)
+                .addComponent(btnEditarAgendamento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemoverPessoa)
+                .addComponent(btnRemoverAgendamento)
                 .addContainerGap())
         );
         areaBotoesLayout.setVerticalGroup(
@@ -182,9 +187,9 @@ public class TelaAgendamento extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, areaBotoesLayout.createSequentialGroup()
                 .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovaPessoa)
-                    .addComponent(btnEditarPessoa)
-                    .addComponent(btnRemoverPessoa))
+                    .addComponent(btnNovoAgendamento)
+                    .addComponent(btnEditarAgendamento)
+                    .addComponent(btnRemoverAgendamento))
                 .addGap(32, 32, 32))
         );
 
@@ -232,17 +237,20 @@ public class TelaAgendamento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNovaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPessoaActionPerformed
-       
-    }//GEN-LAST:event_btnNovaPessoaActionPerformed
+    private void btnNovoAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoAgendamentoActionPerformed
+       jftData = new JFormattedTextField(dateFormat);
+       jftData.setValue(new java.util.Date());
+       TelaCadastroAgendamento telaCadastro = new TelaCadastroAgendamento(this, rootPaneCheckingEnabled);
+       telaCadastro.setVisible(true);
+    }//GEN-LAST:event_btnNovoAgendamentoActionPerformed
 
-    private void btnEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPessoaActionPerformed
+    private void btnEditarAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAgendamentoActionPerformed
        
-    }//GEN-LAST:event_btnEditarPessoaActionPerformed
+    }//GEN-LAST:event_btnEditarAgendamentoActionPerformed
 
-    private void btnRemoverPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPessoaActionPerformed
+    private void btnRemoverAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverAgendamentoActionPerformed
      
-    }//GEN-LAST:event_btnRemoverPessoaActionPerformed
+    }//GEN-LAST:event_btnRemoverAgendamentoActionPerformed
 
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
         // TODO add your handling code here:
@@ -293,29 +301,33 @@ public class TelaAgendamento extends javax.swing.JFrame {
     private void popularClientesCadastrados() {
     try {
         clientes = pessoaRepository.getAllClientes();
-        
-        DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
-        model.addElement(null);
-        for (Cliente cliente : clientes) {
-            model.addElement(cliente);
-           
-        }
+            if (clientes == null || clientes.isEmpty()) {
+                System.err.println("Nenhum cliente encontrado para popular o JComboBox.");
+                return;
+            }
 
-        cmbCliente.setModel(model);
-        cmbCliente.setSelectedItem(null);
-    } catch (Exception e) {
-        Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
-    }
-} 
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            model.addElement("Selecione um cliente");
+
+            for (Cliente cliente : clientes) {
+                model.addElement(cliente.getNome());
+            }
+
+            cmbCliente.setModel(model);
+            cmbCliente.setSelectedItem("Selecione um cliente");
+        } catch (Exception e) {
+            Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
+        }
+    } 
     
-       private void popularServicosCadastrados() {
+    private void popularServicosCadastrados() {
     try {
         servicos = servicoRepository.getAllServicos();
         
-        DefaultComboBoxModel<Servico> model = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement(null);
         for (Servico servico : servicos) {
-            model.addElement(servico);
+            model.addElement(servico.getDescricao());
            
         }
 
@@ -325,17 +337,17 @@ public class TelaAgendamento extends javax.swing.JFrame {
         Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
     }
 } 
-       
+     
        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;
-    private javax.swing.JButton btnEditarPessoa;
-    private javax.swing.JButton btnNovaPessoa;
-    private javax.swing.JButton btnRemoverPessoa;
-    private javax.swing.JComboBox<Cliente> cmbCliente;
-    private javax.swing.JComboBox<Servico> cmbServico;
+    private javax.swing.JButton btnEditarAgendamento;
+    private javax.swing.JButton btnNovoAgendamento;
+    private javax.swing.JButton btnRemoverAgendamento;
+    private javax.swing.JComboBox<String> cmbCliente;
+    private javax.swing.JComboBox<String> cmbServico;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JFormattedTextField jftData;
@@ -343,7 +355,7 @@ public class TelaAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JList<Funcionario> lstFuncionarios;
+    private javax.swing.JList<Agendamento> lstAgendamentos;
     private javax.swing.JPanel pnlFuncionario;
     // End of variables declaration//GEN-END:variables
 }

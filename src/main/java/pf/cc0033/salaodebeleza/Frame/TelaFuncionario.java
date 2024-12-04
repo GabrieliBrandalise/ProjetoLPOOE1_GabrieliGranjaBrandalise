@@ -8,7 +8,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
-import pf.cc0033.salaodebeleza.entidade.Cliente;
 import pf.cc0033.salaodebeleza.entidade.Funcionario;
 import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
 

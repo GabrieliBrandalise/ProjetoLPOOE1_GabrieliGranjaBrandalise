@@ -4,7 +4,13 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import pf.cc0033.salaodebeleza.dao.AgendaRepositorioJPA;
+import pf.cc0033.salaodebeleza.entidade.Agendamento;
 import pf.cc0033.salaodebeleza.entidade.Cliente;
+import pf.cc0033.salaodebeleza.entidade.Funcionario;
 import pf.cc0033.salaodebeleza.entidade.Servico;
 
 /**
@@ -13,12 +19,22 @@ import pf.cc0033.salaodebeleza.entidade.Servico;
  */
 public class TelaAgendaFuncionario extends javax.swing.JDialog {
 
+    private Funcionario funcionarioAgenda;
+    AgendaRepositorioJPA jpa;
     /**
      * Creates new form TelaAgendaFuncionario
      */
-    public TelaAgendaFuncionario(java.awt.Frame parent, boolean modal) {
+    public TelaAgendaFuncionario(java.awt.Frame parent, boolean modal, Funcionario funcionario) {
         super(parent, modal);
         initComponents();
+        this.funcionarioAgenda = funcionario;
+        jpa = new AgendaRepositorioJPA();
+        this.carregarDadosNaTabela();
+    }
+
+    private TelaAgendaFuncionario(JFrame jFrame, boolean b) {
+         jpa = new AgendaRepositorioJPA();
+         this.carregarDadosNaTabela();
     }
 
     /**
@@ -33,7 +49,7 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         lblTitulo1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTabelaAgenda = new javax.swing.JTable();
+        tblAgenda = new javax.swing.JTable();
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome3 = new javax.swing.JLabel();
         jcbServico = new javax.swing.JComboBox<>();
@@ -47,7 +63,7 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo1.setText(" Agenda Funcionario:");
 
-        jTabelaAgenda.setModel(new javax.swing.table.DefaultTableModel(
+        tblAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,8 +74,8 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
                 "Cliente", "Serviço", "Data", "Horário"
             }
         ));
-        jTabelaAgenda.setColumnSelectionAllowed(true);
-        jScrollPane2.setViewportView(jTabelaAgenda);
+        tblAgenda.setColumnSelectionAllowed(true);
+        jScrollPane2.setViewportView(tblAgenda);
 
         javax.swing.GroupLayout pnlFuncionarioLayout = new javax.swing.GroupLayout(pnlFuncionario);
         pnlFuncionario.setLayout(pnlFuncionarioLayout);
@@ -220,17 +236,48 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         });
     }
 
+     private void carregarDadosNaTabela() {
+        List<Agendamento> agendamentos = jpa.getAllAgendamentosByAgenda(funcionarioAgenda.getAgenda());
+
+        DefaultTableModel model = (DefaultTableModel) tblAgenda.getModel();
+
+        model.setRowCount(0);
+
+        for (Agendamento agendamento : agendamentos) {
+            Object[] dadosVeiculo = {
+                agendamento.getCliente().getNome(),
+                agendamento.getServico().getDescricao(),
+                agendamento.getData(),
+                agendamento.getData().getHours(),
+            };
+            model.addRow(dadosVeiculo);
+        }
+
+        tblAgenda.setModel(model);
+
+        this.setSize(600, 400);
+        this.setVisible(true);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaListagem;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTabelaAgenda;
     private javax.swing.JComboBox<Cliente> jcbCliente;
     private javax.swing.JComboBox<Servico> jcbServico;
     private javax.swing.JLabel lblBuscaNome;
     private javax.swing.JLabel lblBuscaNome3;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JPanel pnlFuncionario;
+    private javax.swing.JTable tblAgenda;
     // End of variables declaration//GEN-END:variables
+
+    public Funcionario getFuncionarioAgenda() {
+        return funcionarioAgenda;
+    }
+
+    public void setFuncionarioAgenda(Funcionario funcionarioAgenda) {
+        this.funcionarioAgenda = funcionarioAgenda;
+    }
 }

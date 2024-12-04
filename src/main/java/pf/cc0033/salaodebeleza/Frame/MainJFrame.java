@@ -80,7 +80,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         menuAgenda.setText("Agendas");
 
-        miAgenda.setText("Agenda");
+        miAgenda.setText("Escolher Agenda");
         miAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miAgendaActionPerformed(evt);

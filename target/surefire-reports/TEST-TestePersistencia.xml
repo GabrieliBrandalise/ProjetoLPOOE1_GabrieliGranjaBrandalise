@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="TestePersistencia" time="0.341" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="TestePersistencia" time="2.128" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,8 +15,9 @@
     <property name="user.country" value="BR"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\ggbra\AppData\Local\Temp\surefire14164718356920059201\surefirebooter-20241203103006254_3.jar C:\Users\ggbra\AppData\Local\Temp\surefire14164718356920059201 2024-12-03T10-30-06_118-jvmRun1 surefire-20241203103006254_1tmp surefire_0-20241203103006254_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\ggbra\AppData\Local\Temp\surefire8501195710139947513\surefirebooter-20241204094701032_3.jar C:\Users\ggbra\AppData\Local\Temp\surefire8501195710139947513 2024-12-04T09-47-00_874-jvmRun1 surefire-20241204094701032_1tmp surefire_0-20241204094701032_2tmp"/>
     <property name="jdk.debug" value="release"/>
+    <property name="test" value="TestePersistencia"/>
     <property name="surefire.test.class.path" value="C:\Users\ggbra\OneDrive\Documentos\NetBeansProjects\ProjetoLPOOE2_GabrieliGranjaBrandalise\target\test-classes;C:\Users\ggbra\OneDrive\Documentos\NetBeansProjects\ProjetoLPOOE2_GabrieliGranjaBrandalise\target\classes;C:\Users\ggbra\.m2\repository\org\hibernate\javax\persistence\hibernate-jpa-2.1-api\1.0.2.Final\hibernate-jpa-2.1-api-1.0.2.Final.jar;C:\Users\ggbra\.m2\repository\org\hibernate\hibernate-core\5.3.3.Final\hibernate-core-5.3.3.Final.jar;C:\Users\ggbra\.m2\repository\org\jboss\logging\jboss-logging\3.3.2.Final\jboss-logging-3.3.2.Final.jar;C:\Users\ggbra\.m2\repository\javax\persistence\javax.persistence-api\2.2\javax.persistence-api-2.2.jar;C:\Users\ggbra\.m2\repository\org\javassist\javassist\3.23.1-GA\javassist-3.23.1-GA.jar;C:\Users\ggbra\.m2\repository\net\bytebuddy\byte-buddy\1.8.13\byte-buddy-1.8.13.jar;C:\Users\ggbra\.m2\repository\antlr\antlr\2.7.7\antlr-2.7.7.jar;C:\Users\ggbra\.m2\repository\org\jboss\spec\javax\transaction\jboss-transaction-api_1.2_spec\1.1.1.Final\jboss-transaction-api_1.2_spec-1.1.1.Final.jar;C:\Users\ggbra\.m2\repository\org\jboss\jandex\2.0.5.Final\jandex-2.0.5.Final.jar;C:\Users\ggbra\.m2\repository\com\fasterxml\classmate\1.3.4\classmate-1.3.4.jar;C:\Users\ggbra\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;C:\Users\ggbra\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;C:\Users\ggbra\.m2\repository\org\hibernate\common\hibernate-commons-annotations\5.0.4.Final\hibernate-commons-annotations-5.0.4.Final.jar;C:\Users\ggbra\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\ggbra\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\ggbra\.m2\repository\org\postgresql\postgresql\42.2.24\postgresql-42.2.24.jar;C:\Users\ggbra\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\ggbra\.m2\repository\org\hibernate\hibernate-entitymanager\4.3.1.Final\hibernate-entitymanager-4.3.1.Final.jar;C:\Users\ggbra\.m2\repository\org\jboss\logging\jboss-logging-annotations\1.2.0.Beta1\jboss-logging-annotations-1.2.0.Beta1.jar;C:\Users\ggbra\.m2\repository\javax\xml\bind\jaxb-api\2.3.0\jaxb-api-2.3.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\ggbra"/>
@@ -30,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\ggbra\AppData\Local\Temp\surefire14164718356920059201\surefirebooter-20241203103006254_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\ggbra\AppData\Local\Temp\surefire8501195710139947513\surefirebooter-20241204094701032_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.2+13-LTS-58"/>
@@ -59,76 +60,61 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testePersistencia" classname="TestePersistencia" time="0.078">
-    <system-out><![CDATA[Hibernate: alter table tb_agenda drop constraint FK7qhmtx0jrd6rmb2v7n53hqq0b
-Hibernate: alter table tb_agendamento drop constraint FK3uextfnvga6bd1j50iahv89q4
-Hibernate: alter table tb_agendamento drop constraint FK1w0i3oquvxn4bd405fedp9x0j
-Hibernate: alter table tb_agendamento drop constraint FKmvnfwmsoe8qg1v8cb6qr0a9pb
-Hibernate: alter table tb_agendamentoservico drop constraint FKcpiwwwxx63h9xgqhbt98xlp5g
-Hibernate: alter table tb_agendamentoservico drop constraint FKakoogjxf940o9qcguy9ym8cii
-Hibernate: drop table if exists tb_agenda cascade
-Hibernate: drop table if exists tb_agendamento cascade
-Hibernate: drop table if exists tb_agendamentoservico cascade
-Hibernate: drop table if exists tb_cliente cascade
-Hibernate: drop table if exists tb_funcionario cascade
-Hibernate: drop table if exists tb_servico cascade
-Hibernate: drop sequence if exists hibernate_sequence
-Hibernate: create sequence hibernate_sequence start 1 increment 1
-Hibernate: create table tb_agenda (id int4 not null, horariomarcado timestamp, funcionario_id int4, primary key (id))
-Hibernate: create table tb_agendamento (id int4 not null, data timestamp, agenda_id int4, cliente_id int4, funcionario_id int4, primary key (id))
-Hibernate: create table tb_agendamentoservico (agendamento_id int4 not null, servico_id int4 not null)
+  <testcase name="testePersistencia" classname="TestePersistencia" time="0.065">
+    <system-out><![CDATA[Hibernate: create table tb_agenda (id int4 not null, funcionario_id int4, primary key (id))
+Hibernate: create table tb_agendamento (id int4 not null, data timestamp, agenda_id int4, cliente_id int4, servico_id int4, primary key (id))
 Hibernate: create table tb_cliente (id int4 not null, cpf varchar(11), nome varchar(150), telefone varchar(9), perfilCliente varchar(255), primary key (id))
 Hibernate: create table tb_funcionario (id int4 not null, cpf varchar(11), nome varchar(150), telefone varchar(9), tipoFuncionario varchar(255), primary key (id))
 Hibernate: create table tb_servico (id int4 not null, descricao varchar(150), maximodesconto float8, valorunitario float8, primary key (id))
+Hibernate: alter table tb_agenda drop constraint UK_5cls0gd8njuh09o2e6akxlm4t
 Hibernate: alter table tb_agenda add constraint UK_5cls0gd8njuh09o2e6akxlm4t unique (funcionario_id)
 Hibernate: alter table tb_agenda add constraint FK7qhmtx0jrd6rmb2v7n53hqq0b foreign key (funcionario_id) references tb_funcionario
 Hibernate: alter table tb_agendamento add constraint FK3uextfnvga6bd1j50iahv89q4 foreign key (agenda_id) references tb_agenda
 Hibernate: alter table tb_agendamento add constraint FK1w0i3oquvxn4bd405fedp9x0j foreign key (cliente_id) references tb_cliente
-Hibernate: alter table tb_agendamento add constraint FKmvnfwmsoe8qg1v8cb6qr0a9pb foreign key (funcionario_id) references tb_funcionario
-Hibernate: alter table tb_agendamentoservico add constraint FKcpiwwwxx63h9xgqhbt98xlp5g foreign key (servico_id) references tb_servico
-Hibernate: alter table tb_agendamentoservico add constraint FKakoogjxf940o9qcguy9ym8cii foreign key (agendamento_id) references tb_agendamento
+Hibernate: alter table tb_agendamento add constraint FKee2nunpr5xubyfj2etfk7ftno foreign key (servico_id) references tb_servico
 Hibernate: select nextval ('hibernate_sequence')
 Hibernate: insert into tb_cliente (cpf, nome, telefone, perfilCliente, id) values (?, ?, ?, ?, ?)
 Hibernate: select nextval ('hibernate_sequence')
 Hibernate: select nextval ('hibernate_sequence')
 Hibernate: insert into tb_funcionario (cpf, nome, telefone, tipoFuncionario, id) values (?, ?, ?, ?, ?)
-Hibernate: insert into tb_agenda (funcionario_id, horariomarcado, id) values (?, ?, ?)
+Hibernate: insert into tb_agenda (funcionario_id, id) values (?, ?)
 Hibernate: select nextval ('hibernate_sequence')
 Hibernate: insert into tb_servico (descricao, maximodesconto, valorunitario, id) values (?, ?, ?, ?)
 Hibernate: select nextval ('hibernate_sequence')
-Hibernate: insert into tb_agendamento (agenda_id, cliente_id, data, funcionario_id, id) values (?, ?, ?, ?, ?)
-Hibernate: insert into tb_agendamentoservico (agendamento_id, servico_id) values (?, ?)
+Hibernate: insert into tb_agendamento (agenda_id, cliente_id, data, servico_id, id) values (?, ?, ?, ?, ?)
 ]]></system-out>
-    <system-err><![CDATA[dez. 03, 2024 10:30:09 AM org.hibernate.ejb.HibernatePersistence logDeprecation
+    <system-err><![CDATA[dez. 04, 2024 9:47:01 AM org.hibernate.ejb.HibernatePersistence logDeprecation
 WARN: HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
-dez. 03, 2024 10:30:09 AM org.hibernate.ejb.HibernatePersistence logDeprecation
+dez. 04, 2024 9:47:01 AM org.hibernate.ejb.HibernatePersistence logDeprecation
 WARN: HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
-dez. 03, 2024 10:30:09 AM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+dez. 04, 2024 9:47:01 AM org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
 INFO: HHH000204: Processing PersistenceUnitInfo [
 	name: pu_lpoo_E1_GabrieliGranjaBrandalise
 	...]
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+dez. 04, 2024 9:47:01 AM org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate Core {5.3.3.Final}
+dez. 04, 2024 9:47:01 AM org.hibernate.cfg.Environment <clinit>
+INFO: HHH000206: hibernate.properties not found
+dez. 04, 2024 9:47:02 AM org.hibernate.annotations.common.reflection.java.JavaReflectionManager <clinit>
+INFO: HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using Hibernate built-in connection pool (not for production use!)
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/ProjetoLPOOE1_GabrieliGranjaBrandalise]
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {password=****, user=postgres}
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH000115: Hibernate connection pool size: 20 (min=1)
-dez. 03, 2024 10:30:09 AM org.hibernate.dialect.Dialect <init>
+dez. 04, 2024 9:47:02 AM org.hibernate.dialect.Dialect <init>
 INFO: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-dez. 03, 2024 10:30:09 AM org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl useContextualLobCreation
+dez. 04, 2024 9:47:02 AM org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl useContextualLobCreation
 INFO: HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException
-dez. 03, 2024 10:30:09 AM org.hibernate.type.BasicTypeRegistry register
-INFO: HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@b91d8c4
-dez. 03, 2024 10:30:09 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
-INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5489b1f7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-dez. 03, 2024 10:30:09 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
-INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4faf104] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-dez. 03, 2024 10:30:09 AM org.hibernate.tool.schema.internal.SchemaCreatorImpl applyImportSources
-INFO: HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@28f9fedd'
+dez. 04, 2024 9:47:02 AM org.hibernate.type.BasicTypeRegistry register
+INFO: HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@76a82f33
+dez. 04, 2024 9:47:03 AM org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@49c17ba4] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
 ]]></system-err>
   </testcase>
 </testsuite>

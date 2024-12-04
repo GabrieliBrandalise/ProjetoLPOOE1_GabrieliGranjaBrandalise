@@ -37,4 +37,8 @@ public class Cliente extends Pessoa implements Serializable{
         this.perfilCliente = perfilCliente;
     }
     
+    @Override
+    public String toString() {
+        return  "id: " + super.getId() + ", nome: " + super.getNome() + ", perfil: " + perfilCliente;
+    }
 }
