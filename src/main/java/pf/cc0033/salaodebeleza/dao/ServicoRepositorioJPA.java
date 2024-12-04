@@ -99,7 +99,7 @@ public class ServicoRepositorioJPA implements InterfaceBD {
         try {
             Query query;
            
-            query = entity.createQuery("Select s from Servico s WHERE s.descricao LIKE :descricao ORDER BY s.id ASC", Servico.class); 
+            query = entity.createQuery("Select s from Servico s WHERE LOWER(s.descricao) LIKE LOWER(:descricao) ORDER BY s.id ASC", Servico.class); 
                 
             query.setParameter("descricao", "%" + descricao + "%");
                          

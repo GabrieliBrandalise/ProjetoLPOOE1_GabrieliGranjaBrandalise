@@ -4,14 +4,20 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.awt.Component;
+import java.awt.event.ItemEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFormattedTextField;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pf.cc0033.salaodebeleza.dao.AgendaRepositorioJPA;
 import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
 import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
@@ -48,6 +54,8 @@ public class TelaAgendamento extends javax.swing.JFrame {
         
         servicos = new ArrayList<>();
         this.popularServicosCadastrados();
+        
+        this.carregarAgendamentos();
     }
 
     /**
@@ -64,8 +72,6 @@ public class TelaAgendamento extends javax.swing.JFrame {
         cmbCliente = new javax.swing.JComboBox<>();
         lblServico = new javax.swing.JLabel();
         cmbServico = new javax.swing.JComboBox<>();
-        lblData = new javax.swing.JLabel();
-        jftData = new javax.swing.JFormattedTextField();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstAgendamentos = new javax.swing.JList<>();
@@ -80,6 +86,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
 
         lblCliente.setText("Cliente: ");
 
+        cmbCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbClienteItemStateChanged(evt);
+            }
+        });
         cmbCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbClienteActionPerformed(evt);
@@ -88,7 +99,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
 
         lblServico.setText("Serviço: ");
 
-        lblData.setText("Data:");
+        cmbServico.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbServicoItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlFuncionarioLayout = new javax.swing.GroupLayout(pnlFuncionario);
         pnlFuncionario.setLayout(pnlFuncionarioLayout);
@@ -97,18 +112,12 @@ public class TelaAgendamento extends javax.swing.JFrame {
             .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFuncionarioLayout.createSequentialGroup()
-                        .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblServico, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlFuncionarioLayout.createSequentialGroup()
-                        .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblServico, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         pnlFuncionarioLayout.setVerticalGroup(
@@ -122,11 +131,7 @@ public class TelaAgendamento extends javax.swing.JFrame {
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblServico))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblData)
-                    .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(lstAgendamentos);
@@ -238,23 +243,67 @@ public class TelaAgendamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoAgendamentoActionPerformed
-       jftData = new JFormattedTextField(dateFormat);
-       jftData.setValue(new java.util.Date());
        TelaCadastroAgendamento telaCadastro = new TelaCadastroAgendamento(this, rootPaneCheckingEnabled);
        telaCadastro.setVisible(true);
+       
+       this.carregarAgendamentos();
     }//GEN-LAST:event_btnNovoAgendamentoActionPerformed
 
     private void btnEditarAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAgendamentoActionPerformed
+        Agendamento agendamentoSelecionado = lstAgendamentos.getSelectedValue();
        
+       if (agendamentoSelecionado != null){
+           TelaCadastroAgendamento telaEdicaoAgendamento = new TelaCadastroAgendamento(this, rootPaneCheckingEnabled);
+           
+           telaEdicaoAgendamento.setA(agendamentoSelecionado);
+           telaEdicaoAgendamento.setVisible(true);
+           
+       } else {          
+            JOptionPane.showMessageDialog(this, "Selecione um agendamento para editar");
+        }
+       
+       this.carregarAgendamentos();
     }//GEN-LAST:event_btnEditarAgendamentoActionPerformed
 
     private void btnRemoverAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverAgendamentoActionPerformed
-     
+      Agendamento agendamento = lstAgendamentos.getSelectedValue();
+        
+        if (agendamento != null){
+            System.out.println("Agendamento: " + agendamento.getId());   
+            
+            try {
+                jpa.conexaoAberta();
+                
+                int delOp = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir o cadastro " + agendamento.getId() + " ?");
+                if (delOp == JOptionPane.YES_OPTION){
+                    jpa.remover(agendamento);
+                }
+                
+                jpa.fecharConexao();
+                this.carregarAgendamentos();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao remover agendamento " + agendamento + "\n" + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um agendamento para remover");
+        }           
     }//GEN-LAST:event_btnRemoverAgendamentoActionPerformed
 
     private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbClienteActionPerformed
+
+    private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
+         if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarDadosFiltro();
+        }
+    }//GEN-LAST:event_cmbClienteItemStateChanged
+
+    private void cmbServicoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbServicoItemStateChanged
+         if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarDadosFiltro();
+        }
+    }//GEN-LAST:event_cmbServicoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -298,23 +347,40 @@ public class TelaAgendamento extends javax.swing.JFrame {
         });
     }
     
-    private void popularClientesCadastrados() {
+   private void popularClientesCadastrados() {
     try {
-        clientes = pessoaRepository.getAllClientes();
+        PessoaRepositorioJPA pessoaRepositorioJPA = new PessoaRepositorioJPA();
+        clientes = pessoaRepositorioJPA.getAllClientes();
             if (clientes == null || clientes.isEmpty()) {
                 System.err.println("Nenhum cliente encontrado para popular o JComboBox.");
                 return;
             }
 
-            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-            model.addElement("Selecione um cliente");
+            DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
+            model.addElement(null);
 
             for (Cliente cliente : clientes) {
-                model.addElement(cliente.getNome());
+                model.addElement(cliente);
             }
 
             cmbCliente.setModel(model);
-            cmbCliente.setSelectedItem("Selecione um cliente");
+            cmbCliente.setSelectedItem(null);
+            
+            cmbCliente.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Cliente) {
+                    Cliente cliente = (Cliente) value;
+                    setText(cliente.getNome()); 
+                } else if (value == null) {
+                    setText("Selecione um cliente"); 
+                }
+                
+                return this;
+            }
+        });
         } catch (Exception e) {
             Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -322,23 +388,61 @@ public class TelaAgendamento extends javax.swing.JFrame {
     
     private void popularServicosCadastrados() {
     try {
-        servicos = servicoRepository.getAllServicos();
+        ServicoRepositorioJPA servicoRepositoryJPA = new ServicoRepositorioJPA();
+        List<Servico> servicos = servicoRepositoryJPA.getAllServicos();
         
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<Servico> model = new DefaultComboBoxModel<>();
         model.addElement(null);
         for (Servico servico : servicos) {
-            model.addElement(servico.getDescricao());
+            model.addElement(servico);
            
         }
 
         cmbServico.setModel(model);
         cmbServico.setSelectedItem(null);
+        
+        cmbServico.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Servico) {
+                    Servico servico = (Servico) value;
+                    setText(servico.getDescricao()); 
+                } else if (value == null) {
+                    setText("Selecione um serviço"); 
+                }
+                
+                return this;
+            }
+        });
     } catch (Exception e) {
         Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
     }
 } 
-     
-       
+     private void carregarAgendamentos(){
+        jpa.conexaoAberta();       
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        modeloLista.addAll(jpa.getAllAgendamentos());
+        lstAgendamentos.setModel(modeloLista);
+        jpa.fecharConexao();
+
+     }
+      private void carregarDadosFiltro() {
+        jpa.conexaoAberta();
+
+        Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+        Servico servico = (Servico) cmbServico.getSelectedItem();
+        if (cliente == null && servico == null) {
+            this.carregarAgendamentos();
+        } else {
+            DefaultListModel modeloLista = new DefaultListModel();
+            modeloLista.addAll(jpa.getAgendamentosFiltros(cliente, servico));
+            lstAgendamentos.setModel(modeloLista);
+            jpa.fecharConexao();
+        }
+      }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
@@ -346,13 +450,11 @@ public class TelaAgendamento extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarAgendamento;
     private javax.swing.JButton btnNovoAgendamento;
     private javax.swing.JButton btnRemoverAgendamento;
-    private javax.swing.JComboBox<String> cmbCliente;
-    private javax.swing.JComboBox<String> cmbServico;
+    private javax.swing.JComboBox<Cliente> cmbCliente;
+    private javax.swing.JComboBox<Servico> cmbServico;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JFormattedTextField jftData;
     private javax.swing.JLabel lblCliente;
-    private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JList<Agendamento> lstAgendamentos;

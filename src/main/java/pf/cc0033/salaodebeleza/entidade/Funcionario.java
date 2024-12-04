@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,7 +24,7 @@ public class Funcionario extends Pessoa implements Serializable{
     @Enumerated(EnumType.STRING)
     private TipoFuncionario tipoFuncionario;
     
-    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Agenda agenda;
     
     

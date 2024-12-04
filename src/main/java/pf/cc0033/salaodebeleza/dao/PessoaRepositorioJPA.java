@@ -112,7 +112,7 @@ public class PessoaRepositorioJPA implements InterfaceBD {
             Query query;
             if (perfil == null && (nome != null && !nome.isEmpty())){
                 
-                query = entity.createQuery("Select c from Cliente c WHERE c.nome LIKE :nome ORDER BY c.id ASC", Cliente.class); 
+                query = entity.createQuery("Select c from Cliente c WHERE LOWER(c.nome) LIKE LOWER(:nome) ORDER BY c.id ASC", Cliente.class); 
                 
                 query.setParameter("nome", "%" + nome + "%");
                 
@@ -124,7 +124,7 @@ public class PessoaRepositorioJPA implements InterfaceBD {
                 
             } else {
                
-                query = entity.createQuery("Select c from Cliente c WHERE c.perfilCliente LIKE :perfil AND c.nome LIKE :nome ORDER BY c.id ASC", Cliente.class);
+                query = entity.createQuery("Select c from Cliente c WHERE c.perfilCliente LIKE :perfil AND LOWER(c.nome) LIKE LOWER(:nome) ORDER BY c.id ASC", Cliente.class);
                
                 query.setParameter("nome", "%" + nome + "%");
                
@@ -145,7 +145,7 @@ public class PessoaRepositorioJPA implements InterfaceBD {
             Query query;
             if (tipo == null && (nome != null && !nome.isEmpty())){
                 
-                query = entity.createQuery("Select f from Funcionario f WHERE f.nome LIKE :nome ORDER BY f.id ASC", Funcionario.class); 
+                query = entity.createQuery("Select f from Funcionario f WHERE LOWER(f.nome) LIKE LOWER(:nome) ORDER BY f.id ASC", Funcionario.class); 
                 
                 query.setParameter("nome", "%" + nome + "%");
                 
@@ -157,7 +157,7 @@ public class PessoaRepositorioJPA implements InterfaceBD {
                 
             } else {
                
-                query = entity.createQuery("Select f from Funcionario f WHERE f.tipoFuncionario LIKE :tipo AND f.nome LIKE :nome ORDER BY f.id ASC", Funcionario.class);
+                query = entity.createQuery("Select f from Funcionario f WHERE f.tipoFuncionario LIKE :tipo AND LOWER(f.nome) LIKE LOWER(:nome) ORDER BY f.id ASC", Funcionario.class);
                
                 query.setParameter("nome", "%" + nome + "%");
                

@@ -47,8 +47,8 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jcbCliente" alignment="0" min="-2" pref="308" max="-2" attributes="0"/>
-                                          <Component id="jcbServico" alignment="0" min="-2" pref="308" max="-2" attributes="0"/>
+                                          <Component id="cmbCliente" alignment="0" min="-2" pref="308" max="-2" attributes="0"/>
+                                          <Component id="cmbServico" alignment="0" min="-2" pref="308" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -89,11 +89,11 @@
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lblBuscaNome" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jcbCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbCliente" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jcbServico" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmbServico" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="lblBuscaNome3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -161,12 +161,15 @@
         <Property name="text" type="java.lang.String" value="Servi&#xe7;o:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jcbServico">
+    <Component class="javax.swing.JComboBox" name="cmbServico">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbServicoItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Servico&gt;"/>
       </AuxValues>
@@ -191,14 +194,15 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JComboBox" name="jcbCliente">
+    <Component class="javax.swing.JComboBox" name="cmbCliente">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbClienteActionPerformed"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbClienteItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbClienteActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Cliente&gt;"/>

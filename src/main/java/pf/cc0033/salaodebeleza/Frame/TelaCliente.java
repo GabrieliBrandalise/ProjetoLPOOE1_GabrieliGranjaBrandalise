@@ -4,6 +4,7 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.awt.event.ItemEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -57,6 +58,11 @@ public class TelaCliente extends javax.swing.JFrame {
 
         lblBuscaNome.setText("Nome:");
 
+        cmbPerfilCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbPerfilClienteItemStateChanged(evt);
+            }
+        });
         cmbPerfilCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPerfilClienteActionPerformed(evt);
@@ -71,8 +77,8 @@ public class TelaCliente extends javax.swing.JFrame {
             }
         });
         txtBuscaNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscaNomeKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscaNomeKeyReleased(evt);
             }
         });
 
@@ -228,10 +234,6 @@ public class TelaCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
 
-    private void txtBuscaNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyTyped
-      
-    }//GEN-LAST:event_txtBuscaNomeKeyTyped
-
     private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
        TelaCadastroCliente telaCadastro = new TelaCadastroCliente(this, rootPaneCheckingEnabled);
        telaCadastro.setVisible(true);
@@ -277,6 +279,16 @@ public class TelaCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um cliente para remover");
         }
     }//GEN-LAST:event_btnRemoverClienteActionPerformed
+
+    private void cmbPerfilClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbPerfilClienteItemStateChanged
+       if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarClientesFiltro();
+        }
+    }//GEN-LAST:event_cmbPerfilClienteItemStateChanged
+
+    private void txtBuscaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyReleased
+        this.carregarClientesFiltro();
+    }//GEN-LAST:event_txtBuscaNomeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -335,6 +347,21 @@ public class TelaCliente extends javax.swing.JFrame {
         cmbPerfilCliente.setModel(model);
 
         cmbPerfilCliente.setSelectedItem(null);
+    }
+     
+      private void carregarClientesFiltro(){
+        jpa.conexaoAberta();
+        
+        if ((PerfilCliente) cmbPerfilCliente.getModel().getSelectedItem() == null && (txtBuscaNome.getText() == null || txtBuscaNome.getText().isEmpty())){
+            this.carregarClientesCadastrados();
+        } else {
+            DefaultListModel modeloLista = new DefaultListModel();
+
+
+            modeloLista.addAll(jpa.getClienteFiltro(txtBuscaNome.getText(), (PerfilCliente) cmbPerfilCliente.getModel().getSelectedItem()));
+            lstClientes.setModel(modeloLista);
+        }
+        jpa.fecharConexao();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;

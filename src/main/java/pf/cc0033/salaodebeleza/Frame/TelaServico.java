@@ -7,9 +7,6 @@ package pf.cc0033.salaodebeleza.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
@@ -31,7 +28,7 @@ public class TelaServico extends javax.swing.JFrame {
         initComponents();
         servicos = new ArrayList<>();
         jpa = new ServicoRepositorioJPA();
-        this.carregarFuncionariosCadastrados();
+        this.carregarServicosCadastrados();
     }
 
     /**
@@ -45,7 +42,7 @@ public class TelaServico extends javax.swing.JFrame {
 
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome = new javax.swing.JLabel();
-        txtBuscaNome = new javax.swing.JTextField();
+        txtBuscaDescricao = new javax.swing.JTextField();
         lblTitulo1 = new javax.swing.JLabel();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,16 +56,16 @@ public class TelaServico extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblBuscaNome.setText("Nome:");
+        lblBuscaNome.setText("Descrição:");
 
-        txtBuscaNome.addActionListener(new java.awt.event.ActionListener() {
+        txtBuscaDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscaNomeActionPerformed(evt);
+                txtBuscaDescricaoActionPerformed(evt);
             }
         });
-        txtBuscaNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscaNomeKeyTyped(evt);
+        txtBuscaDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscaDescricaoKeyReleased(evt);
             }
         });
 
@@ -85,7 +82,7 @@ public class TelaServico extends javax.swing.JFrame {
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                         .addComponent(lblBuscaNome)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscaNome))
+                        .addComponent(txtBuscaDescricao))
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                         .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 204, Short.MAX_VALUE)))
@@ -99,7 +96,7 @@ public class TelaServico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscaNome)
-                    .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -211,19 +208,15 @@ public class TelaServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
+    private void txtBuscaDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaDescricaoActionPerformed
         
-    }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
-    private void txtBuscaNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyTyped
-      
-    }//GEN-LAST:event_txtBuscaNomeKeyTyped
+    }//GEN-LAST:event_txtBuscaDescricaoActionPerformed
 
     private void btnNovaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPessoaActionPerformed
        TelaCadastroServico telaCadastroServico = new TelaCadastroServico(this, rootPaneCheckingEnabled);
        telaCadastroServico.setVisible(true);
        
-       this.carregarFuncionariosCadastrados();
+       this.carregarServicosCadastrados();
     }//GEN-LAST:event_btnNovaPessoaActionPerformed
 
     private void btnEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPessoaActionPerformed
@@ -255,7 +248,7 @@ public class TelaServico extends javax.swing.JFrame {
                 }
                 
                 jpa.fecharConexao();
-                this.carregarFuncionariosCadastrados();
+                this.carregarServicosCadastrados();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao remover serviço " + servicoSelecionado + "\n" + e);
             }
@@ -263,6 +256,10 @@ public class TelaServico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um serviço para remover");
         }
     }//GEN-LAST:event_btnRemoverPessoaActionPerformed
+
+    private void txtBuscaDescricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaDescricaoKeyReleased
+        this.carregarServicosFiltro();
+    }//GEN-LAST:event_txtBuscaDescricaoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -302,11 +299,20 @@ public class TelaServico extends javax.swing.JFrame {
         });
     }
 
-   private void carregarFuncionariosCadastrados(){
+   private void carregarServicosCadastrados(){
         jpa.conexaoAberta();
         
         DefaultListModel modeloLista = new DefaultListModel();
         modeloLista.addAll(jpa.getAllServicos());
+        lstServico.setModel(modeloLista);
+        jpa.fecharConexao();
+    }
+   
+    private void carregarServicosFiltro(){
+        jpa.conexaoAberta();
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        modeloLista.addAll(jpa.getServicoFiltro(txtBuscaDescricao.getText()));
         lstServico.setModel(modeloLista);
         jpa.fecharConexao();
     }
@@ -323,6 +329,6 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JList<Servico> lstServico;
     private javax.swing.JPanel pnlFuncionario;
-    private javax.swing.JTextField txtBuscaNome;
+    private javax.swing.JTextField txtBuscaDescricao;
     // End of variables declaration//GEN-END:variables
 }

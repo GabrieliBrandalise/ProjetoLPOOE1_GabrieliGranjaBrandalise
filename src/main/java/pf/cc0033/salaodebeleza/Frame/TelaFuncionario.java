@@ -4,6 +4,7 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.awt.event.ItemEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -56,6 +57,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         lblBuscaNome.setText("Nome:");
 
+        cmbTipoFuncionario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTipoFuncionarioItemStateChanged(evt);
+            }
+        });
         cmbTipoFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipoFuncionarioActionPerformed(evt);
@@ -64,14 +70,9 @@ public class TelaFuncionario extends javax.swing.JFrame {
 
         lblBuscaVinculo.setText("Tipo:");
 
-        txtBuscaNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscaNomeActionPerformed(evt);
-            }
-        });
         txtBuscaNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscaNomeKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscaNomeKeyReleased(evt);
             }
         });
 
@@ -223,14 +224,6 @@ public class TelaFuncionario extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbTipoFuncionarioActionPerformed
 
-    private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
-        
-    }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
-    private void txtBuscaNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyTyped
-      
-    }//GEN-LAST:event_txtBuscaNomeKeyTyped
-
     private void btnNovoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFuncionarioActionPerformed
        TelaCadastroFuncionario telaCadastro = new TelaCadastroFuncionario(this, rootPaneCheckingEnabled);
        telaCadastro.setVisible(true);
@@ -276,6 +269,16 @@ public class TelaFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um funcionario para remover");
         }
     }//GEN-LAST:event_btnRemoverFuncionarioActionPerformed
+
+    private void txtBuscaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyReleased
+        this.carregarFuncionariosFiltro();
+    }//GEN-LAST:event_txtBuscaNomeKeyReleased
+
+    private void cmbTipoFuncionarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTipoFuncionarioItemStateChanged
+         if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarFuncionariosFiltro();
+        }
+    }//GEN-LAST:event_cmbTipoFuncionarioItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -334,6 +337,20 @@ public class TelaFuncionario extends javax.swing.JFrame {
         cmbTipoFuncionario.setSelectedItem(null);
     }
 
+      private void carregarFuncionariosFiltro(){
+        jpa.conexaoAberta();
+        
+        if ((TipoFuncionario) cmbTipoFuncionario.getModel().getSelectedItem() == null && (txtBuscaNome.getText() == null || txtBuscaNome.getText().isEmpty())){
+            this.carregarFuncionariosCadastrados();
+        } else {
+            DefaultListModel modeloLista = new DefaultListModel();
+
+
+            modeloLista.addAll(jpa.getFuncionarioFiltro(txtBuscaNome.getText(), (TipoFuncionario) cmbTipoFuncionario.getModel().getSelectedItem()));
+            lstFuncionarios.setModel(modeloLista);
+        }
+        jpa.fecharConexao();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;

@@ -119,6 +119,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbPerfilCliente">
           <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbPerfilClienteItemStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbPerfilClienteActionPerformed"/>
           </Events>
           <AuxValues>
@@ -133,7 +134,7 @@
         <Component class="javax.swing.JTextField" name="txtBuscaNome">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscaNomeActionPerformed"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscaNomeKeyTyped"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBuscaNomeKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTitulo1">

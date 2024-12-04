@@ -92,4 +92,11 @@ public class Agendamento implements Serializable{
     public void setServico(Servico servico) {
         this.servico = servico;
     }
+
+    @Override
+    public String toString() {
+        return "id= " + id + ", " + servico.getDescricao() + ", cliente= " + cliente.getNome() + ", " + data + ", agenda= " + agenda.getFuncionario().getNome();
+    }
+    
+    
 }

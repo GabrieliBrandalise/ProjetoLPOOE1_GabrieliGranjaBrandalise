@@ -4,10 +4,20 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 import pf.cc0033.salaodebeleza.dao.AgendaRepositorioJPA;
+import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
+import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
 import pf.cc0033.salaodebeleza.entidade.Agendamento;
 import pf.cc0033.salaodebeleza.entidade.Cliente;
 import pf.cc0033.salaodebeleza.entidade.Funcionario;
@@ -17,10 +27,15 @@ import pf.cc0033.salaodebeleza.entidade.Servico;
  *
  * @author ggbra
  */
+
 public class TelaAgendaFuncionario extends javax.swing.JDialog {
 
     private Funcionario funcionarioAgenda;
     AgendaRepositorioJPA jpa;
+    PessoaRepositorioJPA pessoaRepository;
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     /**
      * Creates new form TelaAgendaFuncionario
      */
@@ -30,11 +45,17 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         this.funcionarioAgenda = funcionario;
         jpa = new AgendaRepositorioJPA();
         this.carregarDadosNaTabela();
+        pessoaRepository = new PessoaRepositorioJPA();
+        this.popularServicosCadastrados();
+        this.popularClientesCadastrados();
     }
 
     private TelaAgendaFuncionario(JFrame jFrame, boolean b) {
          jpa = new AgendaRepositorioJPA();
          this.carregarDadosNaTabela();
+         pessoaRepository = new PessoaRepositorioJPA();
+         this.popularServicosCadastrados();
+         this.popularClientesCadastrados();
     }
 
     /**
@@ -52,10 +73,10 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         tblAgenda = new javax.swing.JTable();
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome3 = new javax.swing.JLabel();
-        jcbServico = new javax.swing.JComboBox<>();
+        cmbServico = new javax.swing.JComboBox<>();
         lblBuscaNome = new javax.swing.JLabel();
         areaListagem = new javax.swing.JPanel();
-        jcbCliente = new javax.swing.JComboBox<>();
+        cmbCliente = new javax.swing.JComboBox<>();
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -90,6 +111,12 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
 
         lblBuscaNome3.setText("Serviço:");
 
+        cmbServico.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbServicoItemStateChanged(evt);
+            }
+        });
+
         lblBuscaNome.setText("Cliente:");
 
         javax.swing.GroupLayout areaListagemLayout = new javax.swing.GroupLayout(areaListagem);
@@ -103,9 +130,14 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
             .addGap(0, 6, Short.MAX_VALUE)
         );
 
-        jcbCliente.addActionListener(new java.awt.event.ActionListener() {
+        cmbCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbClienteItemStateChanged(evt);
+            }
+        });
+        cmbCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbClienteActionPerformed(evt);
+                cmbClienteActionPerformed(evt);
             }
         });
 
@@ -141,8 +173,8 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
                                             .addComponent(lblBuscaNome3))
                                         .addGap(27, 27, 27)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jcbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jcbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,10 +203,10 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblBuscaNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jcbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblBuscaNome3))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,13 +218,25 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClienteActionPerformed
+    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbClienteActionPerformed
+    }//GEN-LAST:event_cmbClienteActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-         dispose();
+        dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void cmbServicoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbServicoItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarDadosFiltro();
+        }
+    }//GEN-LAST:event_cmbServicoItemStateChanged
+
+    private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            this.carregarDadosFiltro();
+        }
+    }//GEN-LAST:event_cmbClienteItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -236,9 +280,10 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         });
     }
 
-     private void carregarDadosNaTabela() {
+    private void carregarDadosNaTabela() {
         List<Agendamento> agendamentos = jpa.getAllAgendamentosByAgenda(funcionarioAgenda.getAgenda());
 
+        
         DefaultTableModel model = (DefaultTableModel) tblAgenda.getModel();
 
         model.setRowCount(0);
@@ -247,9 +292,8 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
             Object[] dadosVeiculo = {
                 agendamento.getCliente().getNome(),
                 agendamento.getServico().getDescricao(),
-                agendamento.getData(),
-                agendamento.getData().getHours(),
-            };
+                dateFormat.format(agendamento.getData()),
+                timeFormat.format(agendamento.getData()),};
             model.addRow(dadosVeiculo);
         }
 
@@ -259,13 +303,114 @@ public class TelaAgendaFuncionario extends javax.swing.JDialog {
         this.setVisible(true);
     }
 
+    private void carregarDadosFiltro() {
+        jpa.conexaoAberta();
+
+        Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
+        Servico servico = (Servico) cmbServico.getSelectedItem();
+
+        if (cliente == null && servico == null) {
+            this.carregarDadosNaTabela();
+        } else {
+            List<Agendamento> agendamentos = jpa.getAgendaFuncionarioFiltros(cliente, servico, funcionarioAgenda.getAgenda());
+            DefaultTableModel model = (DefaultTableModel) tblAgenda.getModel();
+
+            model.setRowCount(0);
+
+            for (Agendamento agendamento : agendamentos) {
+            Object[] dadosVeiculo = {
+                agendamento.getCliente().getNome(),
+                agendamento.getServico().getDescricao(),
+                dateFormat.format(agendamento.getData()),
+                timeFormat.format(agendamento.getData()),};
+            model.addRow(dadosVeiculo);
+        }
+            tblAgenda.repaint();
+        }
+        jpa.fecharConexao();
+    }
+
+   private void popularClientesCadastrados() {
+    try {
+        PessoaRepositorioJPA pessoaRepositorioJPA = new PessoaRepositorioJPA();
+        List<Cliente> clientes = pessoaRepositorioJPA.getAllClientes();
+            if (clientes == null || clientes.isEmpty()) {
+                System.err.println("Nenhum cliente encontrado para popular o JComboBox.");
+                return;
+            }
+
+            DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
+            model.addElement(null);
+
+            for (Cliente cliente : clientes) {
+                model.addElement(cliente);
+            }
+
+            cmbCliente.setModel(model);
+            cmbCliente.setSelectedItem(null);
+            
+            cmbCliente.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Cliente) {
+                    Cliente cliente = (Cliente) value;
+                    setText(cliente.getNome()); 
+                } else if (value == null) {
+                    setText("Selecione um cliente"); 
+                }
+                
+                return this;
+            }
+        });
+        } catch (Exception e) {
+            Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
+        }
+    } 
+    
+    private void popularServicosCadastrados() {
+    try {
+        ServicoRepositorioJPA servicoRepositoryJPA = new ServicoRepositorioJPA();
+        List<Servico> servicos = servicoRepositoryJPA.getAllServicos();
+        
+        DefaultComboBoxModel<Servico> model = new DefaultComboBoxModel<>();
+        model.addElement(null);
+        for (Servico servico : servicos) {
+            model.addElement(servico);
+           
+        }
+
+        cmbServico.setModel(model);
+        cmbServico.setSelectedItem(null);
+        
+        cmbServico.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Servico) {
+                    Servico servico = (Servico) value;
+                    setText(servico.getDescricao()); 
+                } else if (value == null) {
+                    setText("Selecione um serviço"); 
+                }
+                
+                return this;
+            }
+        });
+    } catch (Exception e) {
+        Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
+    }
+   }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaListagem;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<Cliente> cmbCliente;
+    private javax.swing.JComboBox<Servico> cmbServico;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox<Cliente> jcbCliente;
-    private javax.swing.JComboBox<Servico> jcbServico;
     private javax.swing.JLabel lblBuscaNome;
     private javax.swing.JLabel lblBuscaNome3;
     private javax.swing.JLabel lblTitulo1;
