@@ -25,9 +25,6 @@ public class Funcionario extends Pessoa implements Serializable{
     
     @Enumerated(EnumType.STRING)
     private TipoFuncionario tipoFuncionario;
-
-    @OneToMany(mappedBy = "funcionario")
-    private List<Agendamento> agendamentos;
     
     @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private Agenda agenda;
@@ -35,11 +32,8 @@ public class Funcionario extends Pessoa implements Serializable{
     
     
     public Funcionario(){
-        this.agendamentos = new ArrayList<>();
-    }
-    
-    
-    
+      
+    } 
     
     
     public TipoFuncionario getTipoFuncionario() {
@@ -48,18 +42,6 @@ public class Funcionario extends Pessoa implements Serializable{
 
     public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
         this.tipoFuncionario = tipoFuncionario;
-    }
-
-    public List<Agendamento> getAgendamentos() {
-        return agendamentos;
-    }
-
-    public void setAgendamentos(List<Agendamento> agendamentos) {
-        this.agendamentos = agendamentos;
-    }
-    
-    public void addAgendamento(Agendamento agendamento){
-        this.agendamentos.add(agendamento);
     }
 
     public Agenda getAgenda() {

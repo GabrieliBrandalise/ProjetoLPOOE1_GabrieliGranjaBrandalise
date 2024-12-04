@@ -38,7 +38,7 @@ public class Servico implements Serializable{
     private Double maximoDesconto;
     
     @ManyToMany(mappedBy = "servicos")
-    private List<Agendamento> agendamentos;
+    private List<Agendamento> agendamentos;//mudar para one to many
 
     public Integer getId() {
         return id;

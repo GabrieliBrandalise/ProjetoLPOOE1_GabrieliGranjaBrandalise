@@ -31,8 +31,6 @@ public class TelaServico extends javax.swing.JFrame {
 
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome = new javax.swing.JLabel();
-        cmbTipoFuncionario = new javax.swing.JComboBox<>();
-        lblBuscaVinculo = new javax.swing.JLabel();
         txtBuscaNome = new javax.swing.JTextField();
         lblTitulo1 = new javax.swing.JLabel();
         areaListagem = new javax.swing.JPanel();
@@ -49,14 +47,6 @@ public class TelaServico extends javax.swing.JFrame {
 
         lblBuscaNome.setText("Nome:");
 
-        cmbTipoFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoFuncionarioActionPerformed(evt);
-            }
-        });
-
-        lblBuscaVinculo.setText("Tipo:");
-
         txtBuscaNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscaNomeActionPerformed(evt);
@@ -69,7 +59,7 @@ public class TelaServico extends javax.swing.JFrame {
         });
 
         lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTitulo1.setText("Funcionario");
+        lblTitulo1.setText("Serviços");
 
         javax.swing.GroupLayout pnlFuncionarioLayout = new javax.swing.GroupLayout(pnlFuncionario);
         pnlFuncionario.setLayout(pnlFuncionarioLayout);
@@ -81,14 +71,10 @@ public class TelaServico extends javax.swing.JFrame {
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                         .addComponent(lblBuscaNome)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscaNome, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblBuscaVinculo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtBuscaNome))
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                         .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 204, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFuncionarioLayout.setVerticalGroup(
@@ -99,9 +85,7 @@ public class TelaServico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscaNome)
-                    .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBuscaVinculo))
+                    .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -212,10 +196,6 @@ public class TelaServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbTipoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoFuncionarioActionPerformed
-        
-    }//GEN-LAST:event_cmbTipoFuncionarioActionPerformed
-
     private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
         
     }//GEN-LAST:event_txtBuscaNomeActionPerformed
@@ -280,11 +260,9 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarPessoa;
     private javax.swing.JButton btnNovaPessoa;
     private javax.swing.JButton btnRemoverPessoa;
-    private javax.swing.JComboBox<TipoFuncionario> cmbTipoFuncionario;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBuscaNome;
-    private javax.swing.JLabel lblBuscaVinculo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JList<Funcionario> lstFuncionarios;

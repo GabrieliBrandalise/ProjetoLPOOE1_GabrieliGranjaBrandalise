@@ -83,7 +83,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="lblBuscaVinculo" min="-2" pref="59" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cmbTipoFuncionario" min="-2" pref="117" max="-2" attributes="0"/>
+                          <Component id="cmbPerfilCliente" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lblTitulo1" min="-2" pref="179" max="-2" attributes="0"/>
@@ -102,7 +102,7 @@
                   <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblBuscaNome" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbTipoFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbPerfilCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtBuscaNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblBuscaVinculo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -117,12 +117,12 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cmbTipoFuncionario">
+        <Component class="javax.swing.JComboBox" name="cmbPerfilCliente">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbTipoFuncionarioActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbPerfilClienteActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoFuncionario&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;PerfilCliente&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblBuscaVinculo">
@@ -141,7 +141,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cliente"/>
+            <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -175,14 +175,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="lstFuncionarios">
+            <Component class="javax.swing.JList" name="lstClientes">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Funcionario&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Cliente&gt;"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -196,11 +196,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                  <Component id="btnNovaPessoa" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnNovoCliente" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                  <Component id="btnEditarPessoa" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEditarCliente" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnRemoverPessoa" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRemoverCliente" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -210,9 +210,9 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnNovaPessoa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnEditarPessoa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnRemoverPessoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnNovoCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEditarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnRemoverCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
@@ -220,28 +220,28 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnNovaPessoa">
+        <Component class="javax.swing.JButton" name="btnNovoCliente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Novo"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovaPessoaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoClienteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnEditarPessoa">
+        <Component class="javax.swing.JButton" name="btnEditarCliente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarPessoaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarClienteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnRemoverPessoa">
+        <Component class="javax.swing.JButton" name="btnRemoverCliente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoverPessoaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoverClienteActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

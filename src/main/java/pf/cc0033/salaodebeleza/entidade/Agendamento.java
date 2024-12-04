@@ -35,13 +35,9 @@ public class Agendamento implements Serializable{
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
     
-    @ManyToMany
-    @JoinTable(
-        name = "tb_agendamentoservico",
-        joinColumns = @JoinColumn(name = "agendamento_id"),
-        inverseJoinColumns = @JoinColumn(name = "servico_id")
-    )
-    private List<Servico> servicos;
+    @ManyToOne
+    @Column(name = "servico_id")
+    private Servico servico;
     
     @ManyToOne
     @JoinColumn(name="cliente_id")
@@ -52,33 +48,18 @@ public class Agendamento implements Serializable{
     private Date data;
     
     @ManyToOne
-    @JoinColumn(name="funcionario_id")
-    private Funcionario funcionario;
-    
-    @ManyToOne
     @JoinColumn(name="agenda_id")
     private Agenda agenda;
     
     
     
     public Agendamento(){
-        this.servicos = new ArrayList<>();
+        
     }
-    
-    
     
     
     public Integer getId() {
         return id;
-    }
-
-
-    public List<Servico> getServicos() {
-        return servicos;
-    }
-
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
     }
 
     public Cliente getCliente() {
@@ -97,14 +78,6 @@ public class Agendamento implements Serializable{
         this.data = data;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
     public Agenda getAgenda() {
         return agenda;
     }
@@ -112,8 +85,12 @@ public class Agendamento implements Serializable{
     public void setAgenda(Agenda agenda) {
         this.agenda = agenda;
     }
-    
-    public void addServicos(Servico s){
-        this.servicos.add(s);
+
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
 }

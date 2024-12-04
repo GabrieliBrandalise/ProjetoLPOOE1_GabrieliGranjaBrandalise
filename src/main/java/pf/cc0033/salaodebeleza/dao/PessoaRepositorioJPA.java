@@ -10,7 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import pf.cc0033.salaodebeleza.entidade.Cliente;
+import pf.cc0033.salaodebeleza.entidade.Funcionario;
 import pf.cc0033.salaodebeleza.entidade.PerfilCliente;
+import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
 
 
 /**
@@ -23,7 +25,7 @@ public class PessoaRepositorioJPA implements InterfaceBD {
     EntityManagerFactory factory;
 
     public PessoaRepositorioJPA() {
-        factory = Persistence.createEntityManagerFactory("pu_lpoo_estacionamento");
+        factory = Persistence.createEntityManagerFactory("pu_lpoo_E1_GabrieliGranjaBrandalise");
         entity = factory.createEntityManager();
     }
 
@@ -82,18 +84,29 @@ public class PessoaRepositorioJPA implements InterfaceBD {
         return entity;
     }
 
-    public List<Cliente> getAll() {
+    public List<Cliente> getAllClientes() {
         entity = getEntityManager();
         try {
             Query query = entity.createQuery("Select c from Cliente c ORDER BY c.id ASC", Cliente.class);
             return query.getResultList();
         } catch (Exception e) {
-            System.err.println("Erro ao buscar Pessoas: " + e);
+            System.err.println("Erro ao buscar Clientes: " + e);
             return null;
         }
     }
     
-    public List<Cliente> getPessoaFiltro(String nome, PerfilCliente perfil){
+    public List<Funcionario> getAllFuncionarios() {
+        entity = getEntityManager();
+        try {
+            Query query = entity.createQuery("Select f from Funcionario f ORDER BY f.id ASC", Funcionario.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Funcionarios: " + e);
+            return null;
+        }
+    }
+    
+    public List<Cliente> getClienteFiltro(String nome, PerfilCliente perfil){
         entity = getEntityManager();
         try {
             Query query;
@@ -121,7 +134,40 @@ public class PessoaRepositorioJPA implements InterfaceBD {
             return query.getResultList();
             
         } catch (Exception e) {
-            System.err.println("Erro ao buscar Pessoas: " + e);
+            System.err.println("Erro ao buscar Clientes: " + e);
+            return null;
+        }
+    }
+    
+    public List<Funcionario> getFuncionarioFiltro(String nome, TipoFuncionario tipo){
+        entity = getEntityManager();
+        try {
+            Query query;
+            if (tipo == null && (nome != null && !nome.isEmpty())){
+                
+                query = entity.createQuery("Select f from Funcionario f WHERE f.nome LIKE :nome ORDER BY f.id ASC", Funcionario.class); 
+                
+                query.setParameter("nome", "%" + nome + "%");
+                
+            } else if (tipo != null && (nome == null || nome.isEmpty())){
+                
+                query = entity.createQuery("Select f from Funcionario f WHERE f.tipoFuncionario LIKE :tipo ORDER BY f.id ASC", Funcionario.class);
+               
+                query.setParameter("tipo", tipo);
+                
+            } else {
+               
+                query = entity.createQuery("Select f from Funcionario f WHERE f.tipoFuncionario LIKE :tipo AND f.nome LIKE :nome ORDER BY f.id ASC", Funcionario.class);
+               
+                query.setParameter("nome", "%" + nome + "%");
+               
+                query.setParameter("tipo", tipo);
+            }
+            
+            return query.getResultList();
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Funcionarios: " + e);
             return null;
         }
     }

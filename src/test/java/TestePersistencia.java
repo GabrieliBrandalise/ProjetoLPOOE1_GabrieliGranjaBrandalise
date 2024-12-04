@@ -73,7 +73,6 @@ public class TestePersistencia {
          
          Agendamento agendamento = new Agendamento();
          agendamento.setCliente(c);
-         agendamento.setFuncionario(f);
          
          String dataString = "2024-12-22 14:30:00";
             
@@ -85,7 +84,7 @@ public class TestePersistencia {
         } catch (ParseException ex) {
             Logger.getLogger(TestePersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
-        agendamento.addServicos(s);
+        
         agendamento.setAgenda(agenda);
         agenda.addAgendamentos(agendamento);
         f.setAgenda(agenda);
@@ -99,7 +98,7 @@ public class TestePersistencia {
            //  jpa.remover(agendamento);
          } catch (Exception ex) {
              
-             System.err.println("Erro ao persistir dadossssssss.");
+             System.err.println("Erro ao persistir dados.");
          }
      
      

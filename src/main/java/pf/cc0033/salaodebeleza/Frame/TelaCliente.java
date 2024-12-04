@@ -4,8 +4,12 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
-import pf.cc0033.salaodebeleza.entidade.Funcionario;
-import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
+import pf.cc0033.salaodebeleza.entidade.Cliente;
+import pf.cc0033.salaodebeleza.entidade.PerfilCliente;
 
 /**
  *
@@ -13,11 +17,15 @@ import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
  */
 public class TelaCliente extends javax.swing.JFrame {
 
+    PessoaRepositorioJPA jpa;
     /**
      * Creates new form TelaPessoa
      */
     public TelaCliente() {
         initComponents();
+        jpa = new PessoaRepositorioJPA();
+        this.carregarClientesCadastrados();
+        this.popularComboBox();
     }
 
     /**
@@ -31,17 +39,17 @@ public class TelaCliente extends javax.swing.JFrame {
 
         pnlFuncionario = new javax.swing.JPanel();
         lblBuscaNome = new javax.swing.JLabel();
-        cmbTipoFuncionario = new javax.swing.JComboBox<>();
+        cmbPerfilCliente = new javax.swing.JComboBox<>();
         lblBuscaVinculo = new javax.swing.JLabel();
         txtBuscaNome = new javax.swing.JTextField();
         lblTitulo1 = new javax.swing.JLabel();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstFuncionarios = new javax.swing.JList<>();
+        lstClientes = new javax.swing.JList<>();
         areaBotoes = new javax.swing.JPanel();
-        btnNovaPessoa = new javax.swing.JButton();
-        btnEditarPessoa = new javax.swing.JButton();
-        btnRemoverPessoa = new javax.swing.JButton();
+        btnNovoCliente = new javax.swing.JButton();
+        btnEditarCliente = new javax.swing.JButton();
+        btnRemoverCliente = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -49,9 +57,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
         lblBuscaNome.setText("Nome:");
 
-        cmbTipoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        cmbPerfilCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoFuncionarioActionPerformed(evt);
+                cmbPerfilClienteActionPerformed(evt);
             }
         });
 
@@ -69,7 +77,7 @@ public class TelaCliente extends javax.swing.JFrame {
         });
 
         lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTitulo1.setText("Cliente");
+        lblTitulo1.setText("Clientes");
 
         javax.swing.GroupLayout pnlFuncionarioLayout = new javax.swing.GroupLayout(pnlFuncionario);
         pnlFuncionario.setLayout(pnlFuncionarioLayout);
@@ -85,7 +93,7 @@ public class TelaCliente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblBuscaVinculo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbPerfilCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
                         .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -99,13 +107,13 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscaNome)
-                    .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPerfilCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblBuscaVinculo))
                 .addContainerGap())
         );
 
-        jScrollPane1.setViewportView(lstFuncionarios);
+        jScrollPane1.setViewportView(lstClientes);
 
         javax.swing.GroupLayout areaListagemLayout = new javax.swing.GroupLayout(areaListagem);
         areaListagem.setLayout(areaListagemLayout);
@@ -123,24 +131,24 @@ public class TelaCliente extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        btnNovaPessoa.setText("Novo");
-        btnNovaPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoCliente.setText("Novo");
+        btnNovoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovaPessoaActionPerformed(evt);
+                btnNovoClienteActionPerformed(evt);
             }
         });
 
-        btnEditarPessoa.setText("Editar");
-        btnEditarPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarCliente.setText("Editar");
+        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPessoaActionPerformed(evt);
+                btnEditarClienteActionPerformed(evt);
             }
         });
 
-        btnRemoverPessoa.setText("Remover");
-        btnRemoverPessoa.addActionListener(new java.awt.event.ActionListener() {
+        btnRemoverCliente.setText("Remover");
+        btnRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoverPessoaActionPerformed(evt);
+                btnRemoverClienteActionPerformed(evt);
             }
         });
 
@@ -150,11 +158,11 @@ public class TelaCliente extends javax.swing.JFrame {
             areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(areaBotoesLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(btnNovaPessoa)
+                .addComponent(btnNovoCliente)
                 .addGap(79, 79, 79)
-                .addComponent(btnEditarPessoa)
+                .addComponent(btnEditarCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemoverPessoa)
+                .addComponent(btnRemoverCliente)
                 .addContainerGap())
         );
         areaBotoesLayout.setVerticalGroup(
@@ -162,9 +170,9 @@ public class TelaCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, areaBotoesLayout.createSequentialGroup()
                 .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovaPessoa)
-                    .addComponent(btnEditarPessoa)
-                    .addComponent(btnRemoverPessoa))
+                    .addComponent(btnNovoCliente)
+                    .addComponent(btnEditarCliente)
+                    .addComponent(btnRemoverCliente))
                 .addGap(32, 32, 32))
         );
 
@@ -212,9 +220,9 @@ public class TelaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbTipoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoFuncionarioActionPerformed
+    private void cmbPerfilClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPerfilClienteActionPerformed
         
-    }//GEN-LAST:event_cmbTipoFuncionarioActionPerformed
+    }//GEN-LAST:event_cmbPerfilClienteActionPerformed
 
     private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
         
@@ -224,17 +232,51 @@ public class TelaCliente extends javax.swing.JFrame {
       
     }//GEN-LAST:event_txtBuscaNomeKeyTyped
 
-    private void btnNovaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPessoaActionPerformed
+    private void btnNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoClienteActionPerformed
+       TelaCadastroCliente telaCadastro = new TelaCadastroCliente(this, rootPaneCheckingEnabled);
+       telaCadastro.setVisible(true);
+        
        
-    }//GEN-LAST:event_btnNovaPessoaActionPerformed
+        this.carregarClientesCadastrados();
+    }//GEN-LAST:event_btnNovoClienteActionPerformed
 
-    private void btnEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPessoaActionPerformed
+    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
+       Cliente clienteSelecionado = lstClientes.getSelectedValue();
        
-    }//GEN-LAST:event_btnEditarPessoaActionPerformed
+       if (clienteSelecionado != null){
+           TelaCadastroCliente telaEdicaoCliente = new TelaCadastroCliente(this, rootPaneCheckingEnabled);
+           
+           telaEdicaoCliente.setC(clienteSelecionado);
+           telaEdicaoCliente.setVisible(true);
+           
+       } else {          
+            JOptionPane.showMessageDialog(this, "Selecione um cliente para editar");
+        }
+    }//GEN-LAST:event_btnEditarClienteActionPerformed
 
-    private void btnRemoverPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPessoaActionPerformed
-     
-    }//GEN-LAST:event_btnRemoverPessoaActionPerformed
+    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
+      Cliente clienteSelecionado = lstClientes.getSelectedValue();
+        
+        if (clienteSelecionado != null){
+            System.out.println("Cliente: " + clienteSelecionado.getId());   
+            
+            try {
+                jpa.conexaoAberta();
+                
+                int delOp = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir o cadastro " + clienteSelecionado.getNome() + " ?");
+                if (delOp == JOptionPane.YES_OPTION){
+                    jpa.remover(clienteSelecionado);
+                }
+                
+                jpa.fecharConexao();
+                this.carregarClientesCadastrados();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao remover cliente " + clienteSelecionado + "\n" + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um cliente para remover");
+        }
+    }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,21 +316,42 @@ public class TelaCliente extends javax.swing.JFrame {
         });
     }
 
+     private void carregarClientesCadastrados(){
+        jpa.conexaoAberta();
+        
+        DefaultListModel modeloLista = new DefaultListModel();
+        modeloLista.addAll(jpa.getAllClientes());
+        lstClientes.setModel(modeloLista);
+        jpa.fecharConexao();
+    }
+    
+     private void popularComboBox() {
+        DefaultComboBoxModel<PerfilCliente> model = new DefaultComboBoxModel<>();
+        model.addElement(null); 
+
+        for (PerfilCliente vinculo : PerfilCliente.values()) {
+            model.addElement(vinculo);
+        }
+        cmbPerfilCliente.setModel(model);
+
+        cmbPerfilCliente.setSelectedItem(null);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;
-    private javax.swing.JButton btnEditarPessoa;
-    private javax.swing.JButton btnNovaPessoa;
-    private javax.swing.JButton btnRemoverPessoa;
-    private javax.swing.JComboBox<TipoFuncionario> cmbTipoFuncionario;
+    private javax.swing.JButton btnEditarCliente;
+    private javax.swing.JButton btnNovoCliente;
+    private javax.swing.JButton btnRemoverCliente;
+    private javax.swing.JComboBox<PerfilCliente> cmbPerfilCliente;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblBuscaNome;
     private javax.swing.JLabel lblBuscaVinculo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo1;
-    private javax.swing.JList<Funcionario> lstFuncionarios;
+    private javax.swing.JList<Cliente> lstClientes;
     private javax.swing.JPanel pnlFuncionario;
     private javax.swing.JTextField txtBuscaNome;
     // End of variables declaration//GEN-END:variables
 }
+

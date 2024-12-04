@@ -4,28 +4,45 @@
  */
 package pf.cc0033.salaodebeleza.Frame;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import pf.cc0033.salaodebeleza.dao.AgendaRepositorioJPA;
 import pf.cc0033.salaodebeleza.dao.PessoaRepositorioJPA;
+import pf.cc0033.salaodebeleza.dao.ServicoRepositorioJPA;
 import pf.cc0033.salaodebeleza.entidade.Cliente;
 import pf.cc0033.salaodebeleza.entidade.Funcionario;
+import pf.cc0033.salaodebeleza.entidade.Servico;
 import pf.cc0033.salaodebeleza.entidade.TipoFuncionario;
 
 /**
  *
  * @author ggbra
  */
-public class TelaFuncionario extends javax.swing.JFrame {
-    PessoaRepositorioJPA jpa;
+public class TelaAgendamento extends javax.swing.JFrame {
+
+    List<Cliente> clientes;
+    List<Servico> servicos;
+    AgendaRepositorioJPA jpa;
+    PessoaRepositorioJPA pessoaRepository;
+    ServicoRepositorioJPA servicoRepository;
+            
     /**
      * Creates new form TelaPessoa
      */
-    public TelaFuncionario() {
+    public TelaAgendamento() {
         initComponents();
-        jpa = new PessoaRepositorioJPA();
-        this.carregarFuncionariosCadastrados();
-        this.popularComboBox();
+        jpa = new AgendaRepositorioJPA();
+        pessoaRepository = new PessoaRepositorioJPA();
+        servicoRepository = new ServicoRepositorioJPA();
+        
+        clientes = new ArrayList<>();
+        this.popularClientesCadastrados();
+        
+        servicos = new ArrayList<>();
+        this.popularServicosCadastrados();
     }
 
     /**
@@ -38,46 +55,35 @@ public class TelaFuncionario extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlFuncionario = new javax.swing.JPanel();
-        lblBuscaNome = new javax.swing.JLabel();
-        cmbTipoFuncionario = new javax.swing.JComboBox<>();
-        lblBuscaVinculo = new javax.swing.JLabel();
-        txtBuscaNome = new javax.swing.JTextField();
-        lblTitulo1 = new javax.swing.JLabel();
+        lblCliente = new javax.swing.JLabel();
+        cmbCliente = new javax.swing.JComboBox<>();
+        lblServico = new javax.swing.JLabel();
+        cmbServico = new javax.swing.JComboBox<>();
+        lblData = new javax.swing.JLabel();
+        jftData = new javax.swing.JFormattedTextField();
         areaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstFuncionarios = new javax.swing.JList<>();
         areaBotoes = new javax.swing.JPanel();
-        btnNovoFuncionario = new javax.swing.JButton();
-        btnEditarFuncionario = new javax.swing.JButton();
-        btnRemoverFuncionario = new javax.swing.JButton();
+        btnNovaPessoa = new javax.swing.JButton();
+        btnEditarPessoa = new javax.swing.JButton();
+        btnRemoverPessoa = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblBuscaNome.setText("Nome:");
+        lblCliente.setText("Cliente: ");
 
-        cmbTipoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        cmbCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbTipoFuncionarioActionPerformed(evt);
+                cmbClienteActionPerformed(evt);
             }
         });
 
-        lblBuscaVinculo.setText("Tipo:");
+        lblServico.setText("Serviço: ");
 
-        txtBuscaNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscaNomeActionPerformed(evt);
-            }
-        });
-        txtBuscaNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscaNomeKeyTyped(evt);
-            }
-        });
-
-        lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTitulo1.setText("Funcionarios");
+        lblData.setText("Data:");
 
         javax.swing.GroupLayout pnlFuncionarioLayout = new javax.swing.GroupLayout(pnlFuncionario);
         pnlFuncionario.setLayout(pnlFuncionarioLayout);
@@ -87,29 +93,34 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
-                        .addComponent(lblBuscaNome)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscaNome, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblBuscaVinculo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblServico, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlFuncionarioLayout.createSequentialGroup()
-                        .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         pnlFuncionarioLayout.setVerticalGroup(
             pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFuncionarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBuscaNome)
-                    .addComponent(cmbTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBuscaVinculo))
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCliente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblServico))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(pnlFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblData)
+                    .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -127,28 +138,29 @@ public class TelaFuncionario extends javax.swing.JFrame {
         areaListagemLayout.setVerticalGroup(
             areaListagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, areaListagemLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        btnNovoFuncionario.setText("Novo");
-        btnNovoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btnNovaPessoa.setText("Novo");
+        btnNovaPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoFuncionarioActionPerformed(evt);
+                btnNovaPessoaActionPerformed(evt);
             }
         });
 
-        btnEditarFuncionario.setText("Editar");
-        btnEditarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarPessoa.setText("Editar");
+        btnEditarPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarFuncionarioActionPerformed(evt);
+                btnEditarPessoaActionPerformed(evt);
             }
         });
 
-        btnRemoverFuncionario.setText("Remover");
-        btnRemoverFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btnRemoverPessoa.setText("Remover");
+        btnRemoverPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoverFuncionarioActionPerformed(evt);
+                btnRemoverPessoaActionPerformed(evt);
             }
         });
 
@@ -158,11 +170,11 @@ public class TelaFuncionario extends javax.swing.JFrame {
             areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(areaBotoesLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(btnNovoFuncionario)
+                .addComponent(btnNovaPessoa)
                 .addGap(79, 79, 79)
-                .addComponent(btnEditarFuncionario)
+                .addComponent(btnEditarPessoa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemoverFuncionario)
+                .addComponent(btnRemoverPessoa)
                 .addContainerGap())
         );
         areaBotoesLayout.setVerticalGroup(
@@ -170,14 +182,14 @@ public class TelaFuncionario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, areaBotoesLayout.createSequentialGroup()
                 .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(areaBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovoFuncionario)
-                    .addComponent(btnEditarFuncionario)
-                    .addComponent(btnRemoverFuncionario))
+                    .addComponent(btnNovaPessoa)
+                    .addComponent(btnEditarPessoa)
+                    .addComponent(btnRemoverPessoa))
                 .addGap(32, 32, 32))
         );
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTitulo.setText("Cadastros");
+        lblTitulo.setText("Agendamentos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,7 +222,7 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(areaListagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(areaBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,63 +232,21 @@ public class TelaFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbTipoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoFuncionarioActionPerformed
-        
-    }//GEN-LAST:event_cmbTipoFuncionarioActionPerformed
-
-    private void txtBuscaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaNomeActionPerformed
-        
-    }//GEN-LAST:event_txtBuscaNomeActionPerformed
-
-    private void txtBuscaNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaNomeKeyTyped
-      
-    }//GEN-LAST:event_txtBuscaNomeKeyTyped
-
-    private void btnNovoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFuncionarioActionPerformed
-       TelaCadastroFuncionario telaCadastro = new TelaCadastroFuncionario(this, rootPaneCheckingEnabled);
-       telaCadastro.setVisible(true);
-        
+    private void btnNovaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPessoaActionPerformed
        
-        this.carregarFuncionariosCadastrados();
-    }//GEN-LAST:event_btnNovoFuncionarioActionPerformed
+    }//GEN-LAST:event_btnNovaPessoaActionPerformed
 
-    private void btnEditarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarFuncionarioActionPerformed
-        Funcionario funcionarioSelecionado = lstFuncionarios.getSelectedValue();
+    private void btnEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPessoaActionPerformed
        
-       if (funcionarioSelecionado != null){
-           TelaCadastroFuncionario telaEdicaoFuncionario = new TelaCadastroFuncionario(this, rootPaneCheckingEnabled);
-           
-           telaEdicaoFuncionario.setF(funcionarioSelecionado);
-           telaEdicaoFuncionario.setVisible(true);
-           
-       } else {          
-            JOptionPane.showMessageDialog(this, "Selecione um funcionario para editar");
-        }
-    }//GEN-LAST:event_btnEditarFuncionarioActionPerformed
+    }//GEN-LAST:event_btnEditarPessoaActionPerformed
 
-    private void btnRemoverFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverFuncionarioActionPerformed
-      Funcionario funcionarioSelecionado = lstFuncionarios.getSelectedValue();
-        
-        if (funcionarioSelecionado != null){
-            System.out.println("Funcionario: " + funcionarioSelecionado.getId());   
-            
-            try {
-                jpa.conexaoAberta();
-                
-                int delOp = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir o cadastro " + funcionarioSelecionado.getNome() + " ?");
-                if (delOp == JOptionPane.YES_OPTION){
-                    jpa.remover(funcionarioSelecionado);
-                }
-                
-                jpa.fecharConexao();
-                this.carregarFuncionariosCadastrados();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Erro ao remover funcionario " + funcionarioSelecionado + "\n" + e);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionario para remover");
-        }
-    }//GEN-LAST:event_btnRemoverFuncionarioActionPerformed
+    private void btnRemoverPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPessoaActionPerformed
+     
+    }//GEN-LAST:event_btnRemoverPessoaActionPerformed
+
+    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,61 +265,85 @@ public class TelaFuncionario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFuncionario().setVisible(true);
+                new TelaAgendamento().setVisible(true);
             }
         });
     }
     
-     private void carregarFuncionariosCadastrados(){
-        jpa.conexaoAberta();
+    private void popularClientesCadastrados() {
+    try {
+        clientes = pessoaRepository.getAllClientes();
         
-        DefaultListModel modeloLista = new DefaultListModel();
-        modeloLista.addAll(jpa.getAllFuncionarios());
-        lstFuncionarios.setModel(modeloLista);
-        jpa.fecharConexao();
-    }
-    
-     private void popularComboBox() {
-        DefaultComboBoxModel<TipoFuncionario> model = new DefaultComboBoxModel<>();
-        model.addElement(null); 
-
-        for (TipoFuncionario vinculo : TipoFuncionario.values()) {
-            model.addElement(vinculo);
+        DefaultComboBoxModel<Cliente> model = new DefaultComboBoxModel<>();
+        model.addElement(null);
+        for (Cliente cliente : clientes) {
+            model.addElement(cliente);
+           
         }
-        cmbTipoFuncionario.setModel(model);
 
-        cmbTipoFuncionario.setSelectedItem(null);
+        cmbCliente.setModel(model);
+        cmbCliente.setSelectedItem(null);
+    } catch (Exception e) {
+        Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
     }
+} 
+    
+       private void popularServicosCadastrados() {
+    try {
+        servicos = servicoRepository.getAllServicos();
+        
+        DefaultComboBoxModel<Servico> model = new DefaultComboBoxModel<>();
+        model.addElement(null);
+        for (Servico servico : servicos) {
+            model.addElement(servico);
+           
+        }
+
+        cmbServico.setModel(model);
+        cmbServico.setSelectedItem(null);
+    } catch (Exception e) {
+        Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, e);
+    }
+} 
+       
+       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel areaBotoes;
     private javax.swing.JPanel areaListagem;
-    private javax.swing.JButton btnEditarFuncionario;
-    private javax.swing.JButton btnNovoFuncionario;
-    private javax.swing.JButton btnRemoverFuncionario;
-    private javax.swing.JComboBox<TipoFuncionario> cmbTipoFuncionario;
+    private javax.swing.JButton btnEditarPessoa;
+    private javax.swing.JButton btnNovaPessoa;
+    private javax.swing.JButton btnRemoverPessoa;
+    private javax.swing.JComboBox<Cliente> cmbCliente;
+    private javax.swing.JComboBox<Servico> cmbServico;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblBuscaNome;
-    private javax.swing.JLabel lblBuscaVinculo;
+    private javax.swing.JFormattedTextField jftData;
+    private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTitulo1;
     private javax.swing.JList<Funcionario> lstFuncionarios;
     private javax.swing.JPanel pnlFuncionario;
-    private javax.swing.JTextField txtBuscaNome;
     // End of variables declaration//GEN-END:variables
 }

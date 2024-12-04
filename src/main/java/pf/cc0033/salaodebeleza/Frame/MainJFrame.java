@@ -32,10 +32,9 @@ public class MainJFrame extends javax.swing.JFrame {
         miCliente = new javax.swing.JMenuItem();
         miServico = new javax.swing.JMenuItem();
         menuAgendamento = new javax.swing.JMenu();
-        miAgenda = new javax.swing.JMenuItem();
+        miAgendamento = new javax.swing.JMenuItem();
         menuAgenda = new javax.swing.JMenu();
-        menuAjuda = new javax.swing.JMenu();
-        miSobre = new javax.swing.JMenuItem();
+        miAgenda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,39 +49,46 @@ public class MainJFrame extends javax.swing.JFrame {
         menuCadastro.add(miFuncionario);
 
         miCliente.setText("Cliente");
+        miCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miClienteActionPerformed(evt);
+            }
+        });
         menuCadastro.add(miCliente);
 
         miServico.setText("Serviço");
+        miServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miServicoActionPerformed(evt);
+            }
+        });
         menuCadastro.add(miServico);
 
         jMenuBar1.add(menuCadastro);
 
         menuAgendamento.setText("Agendamento");
 
-        miAgenda.setText("Agendar");
-        menuAgendamento.add(miAgenda);
+        miAgendamento.setText("Agendar");
+        miAgendamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAgendamentoActionPerformed(evt);
+            }
+        });
+        menuAgendamento.add(miAgendamento);
 
         jMenuBar1.add(menuAgendamento);
 
         menuAgenda.setText("Agendas");
+
+        miAgenda.setText("Agenda");
+        miAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAgendaActionPerformed(evt);
+            }
+        });
+        menuAgenda.add(miAgenda);
+
         jMenuBar1.add(menuAgenda);
-
-        menuAjuda.setText("Ajuda");
-        menuAjuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAjudaActionPerformed(evt);
-            }
-        });
-
-        miSobre.setText("Sobre");
-        miSobre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSobreActionPerformed(evt);
-            }
-        });
-        menuAjuda.add(miSobre);
-
-        jMenuBar1.add(menuAjuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -101,16 +107,29 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFuncionarioActionPerformed
-        
+        TelaFuncionario telaFuncionario = new TelaFuncionario();
+        telaFuncionario.setVisible(true);
     }//GEN-LAST:event_miFuncionarioActionPerformed
 
-    private void miSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSobreActionPerformed
-     
-    }//GEN-LAST:event_miSobreActionPerformed
+    private void miClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClienteActionPerformed
+        TelaCliente telaCliente = new TelaCliente();
+        telaCliente.setVisible(true);
+    }//GEN-LAST:event_miClienteActionPerformed
 
-    private void menuAjudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAjudaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuAjudaActionPerformed
+    private void miServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miServicoActionPerformed
+        TelaServico telaServico = new TelaServico();
+        telaServico.setVisible(true);
+    }//GEN-LAST:event_miServicoActionPerformed
+
+    private void miAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAgendamentoActionPerformed
+        TelaAgendamento telaAgendamento = new TelaAgendamento();
+        telaAgendamento.setVisible(true);
+    }//GEN-LAST:event_miAgendamentoActionPerformed
+
+    private void miAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAgendaActionPerformed
+        TelaAgenda telaAgenda = new TelaAgenda();
+        telaAgenda.setVisible(true);
+    }//GEN-LAST:event_miAgendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,12 +170,11 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuAgenda;
     private javax.swing.JMenu menuAgendamento;
-    private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenuItem miAgenda;
+    private javax.swing.JMenuItem miAgendamento;
     private javax.swing.JMenuItem miCliente;
     private javax.swing.JMenuItem miFuncionario;
     private javax.swing.JMenuItem miServico;
-    private javax.swing.JMenuItem miSobre;
     // End of variables declaration//GEN-END:variables
 }
